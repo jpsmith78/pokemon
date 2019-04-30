@@ -8,7 +8,17 @@
     <title></title>
   </head>
   <body ng-controller="MainController as ctrl">
+    <form ng-submit="ctrl.findPokemon()">
+      <input id="inputName" type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
+      <button type="submit">Submit</button><br/>
+      <img class="image" ng-if="ctrl.pokemonResult !== ''" src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
+      <h3 ng-if="ctrl.pokemonResult !== ''">{{ctrl.pokemonName}}</h3>
+    </form>
+
     <h1 ng-click="ctrl.getPokemon()">{{ctrl.appName}}</h1>
-    <h1>Hi Everybody</h1>
+    <ul ng-repeat="pokemon in ctrl.pokemonList">
+      <li ng-click="ctrl.moveNameToInputField($event)" ng-bind="pokemon">{{pokemon.name}}</li>
+    </ul
+
   </body>
 </html>
