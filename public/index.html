@@ -17,8 +17,9 @@
       <button type="submit">Submit</button><br/>
     </form>
 
-    <div class="card">
-      <h1 >{{ctrl.pokemonName}}</h1>
+    <div class="card" >
+      <h1>{{ctrl.pokemonName}}</h1>
+      <button ng-click="ctrl.buyPokemon()">Buy</button>
       <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
       <div class="info">
         <div class="stats">
@@ -33,10 +34,12 @@
             <li>{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
           </ul>
         </div>
-
       </div>
-
     </div>
+
+    <div class="myCards">
+    </div>
+
 
     <h2 ng-click="ctrl.getPokemon()">Get Pokemon List</h2>
     <ul ng-repeat="pokemon in ctrl.pokemonList">

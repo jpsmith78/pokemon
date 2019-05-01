@@ -11,6 +11,8 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonResult = '';
   this.pokemonStats = [];
   this.pokemonAblilites = [];
+  this.myCards = [];
+  this.varDup = ''
   this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=30"
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -30,6 +32,8 @@ app.controller('MainController', ['$http', function($http){
         for (let j = 0; j < response.data.stats.length; j++){
           this.pokemonStats.push(response.data.stats[j]);
         };
+
+
     }, error => {
       console.log(error);
     })
@@ -50,10 +54,22 @@ app.controller('MainController', ['$http', function($http){
   };
 
   this.moveNameToInputField = ($event) => {
-        this.pokemonResult = $event.target.innerHTML
+    this.pokemonResult = $event.target.innerHTML
   };
 
-
+  this.buyPokemon = () => {
+    let newCard = angular.element(document.getElementsByClassName("myCards"));
+    
+    newCard.append('<div class="myCard"> <h1>'+this.pokemonName+'</h1> <img src="'+this.pokemonSprites+'" alt="'+this.pokemonName+'"/> <h3>Abilities</h3> <ul class="myAbilities"></ul> <h3>Stats</h3> <ul class="myStats"></ul></div>');
+    let newAbilities = angular.element(document.getElementsByClassName("myAbilities"));
+    let newStats = angular.element(document.getElementsByClassName("myStats"));
+    for (let i = 0; i < this.pokemonAblilites.length; i++) {
+      newAbilities.append('<li>'+this.pokemonAblilites[i].ability.name+'</li>');
+    };
+    for (let j = 0; j < this.pokemonStats.length; j++) {
+      newStats.append('<li>'+this.pokemonStats[j].stat.name+': '+this.pokemonStats[j].base_stat+'</li>');
+    };
+  };
 
 //end MainController
 }]);
