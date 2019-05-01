@@ -4,13 +4,14 @@ const app = angular.module('MyApp', []);
 
 app.controller('MainController', ['$http', function($http){
 
-  this.appName = "Pokemon Fun Time!";
-  this.pokemonSprites = [];
+  this.appName = "Pokemon Fighting Game!";
   this.pokemonList = [];
-  this.pokemonName = [];
-  this.listResults = [];
+  this.pokemonSprites = '';
+  this.pokemonName = '';
   this.pokemonResult = '';
-  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10"
+  this.pokemonStats = [];
+  this.pokemonAblilites = [];
+  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=30"
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/"
 
   this.findPokemon = ()=>{
@@ -20,7 +21,15 @@ app.controller('MainController', ['$http', function($http){
     }).then(response => {
       console.log(response.data);
         this.pokemonSprites = response.data.sprites.front_default;
-        this.pokemonName = response.data.name;
+        this.pokemonName = response.data.name
+        this.pokemonAblilites = [];
+        for (var i = 0; i < response.data.abilities.length; i++) {
+          this.pokemonAblilites.push(response.data.abilities[i]);
+        };
+        this.pokemonStats = [];
+        for (let j = 0; j < response.data.stats.length; j++){
+          this.pokemonStats.push(response.data.stats[j]);
+        };
     }, error => {
       console.log(error);
     })

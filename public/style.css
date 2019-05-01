@@ -2,8 +2,42 @@ h1 {
   color: red;
 }
 .image {
-  width: 200px;
+  width: 300px;
 }
 li:hover{
   cursor: pointer;
+}
+h3, li {
+  text-transform: capitalize;
+}
+ul {
+  display: flex;
+  flex-direction: column;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 6px;
+  margin: 10px auto;
+  width: 600px;
+}
+.info {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px;
+
+}
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: justify;
+  justify-content: center;
+  width: 40%;
+  padding: 0 20px;
+  margin: 0 auto;
+  border: 2px solid black;
 }
