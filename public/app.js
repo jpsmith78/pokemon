@@ -16,6 +16,12 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964"
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/"
 
+
+
+  // ========================================
+  // <<<<<<<<<<<FIND POKEMON FUNCTION>>>>>>>>>
+  // ========================================
+
   this.findPokemon = ()=>{
     $http({
       method: 'GET',
@@ -39,6 +45,10 @@ app.controller('MainController', ['$http', function($http){
     })
   }
 
+  // ========================================
+  // <<<<<<<<<<<GET POKEMON FUNCTION>>>>>>>>>
+  // ========================================
+
   this.getPokemon = () => {
     $http({
       method: 'GET',
@@ -53,9 +63,17 @@ app.controller('MainController', ['$http', function($http){
     })
   };
 
+  // ========================================
+  // <<<<<<<<<<MOVE NAME TO INPUT FIELD>>>>>>
+  // ========================================
+
   this.moveNameToInputField = ($event) => {
     this.pokemonResult = $event.target.innerHTML
   };
+
+  // ========================================
+  // <<<<<<<<<<BUY POKEMON FUNCTION>>>>>>>>>
+  // ========================================
 
   this.buyPokemon = () => {
     let newCard = angular.element(document.getElementsByClassName("myCards"));
@@ -67,6 +85,26 @@ app.controller('MainController', ['$http', function($http){
         newCard.append('<div class="myCard"><h1>'+this.pokemonName+'</h1><img src="'+this.pokemonSprites+'" alt="'+this.pokemonName+'"/><h3>Abilities</h3><ul class="myAbilities"><li>'+this.pokemonAblilites[0].ability.name+'</li></ul><h3>Stats</h3><ul class="myStats"><li>'+this.pokemonStats[0].stat.name+': '+this.pokemonStats[0].base_stat+'</li><li>'+this.pokemonStats[1].stat.name+': '+this.pokemonStats[1].base_stat+'</li><li>'+this.pokemonStats[2].stat.name+': '+this.pokemonStats[2].base_stat+'</li><li>'+this.pokemonStats[3].stat.name+': '+this.pokemonStats[3].base_stat+'</li><li>'+this.pokemonStats[4].stat.name+': '+this.pokemonStats[4].base_stat+'</li><li>'+this.pokemonStats[5].stat.name+': '+this.pokemonStats[5].base_stat+'</li></ul></div>');
       };
     };
+
+    // ========================================
+    // <<<<<<<<<<<CREATE USER FUNCTION>>>>>>>>>
+    // ========================================
+    this.createUser = () => {
+      $http({
+        method: 'POST',
+        url: '/users',
+        data:{
+          username: this.username,
+          password: this.password
+        }
+      }).then(function(res){
+        this.username = '';
+        this.password = '';
+
+      },function(error){
+        console.log(error);
+      })
+    }
 
 
 //end MainController
