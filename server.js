@@ -13,7 +13,7 @@ const app = express();
 // ======================================
 const PORT = process.env.PORT || 3000;
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/pokemoncrud';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/pokemon';
 
 // ======================================
 // <<<<<<<<<DEPENDENCIES >>>>>>>>>>>>>>>>>
@@ -29,12 +29,18 @@ app.use(session({
 
 
 
-app.get('/pokemon', (req,res) => {
-  res.send('hello');
+app.get('/checkLogIn', (req,res) => {
+    res.json(req.session)
 })
+
+
+const sessionsController = require('./controllers/sessions.js');
+app.use('/sessions', sessionsController);
 
 const usersController = require('./controllers/users.js');
 app.use('/users', usersController);
+
+
 
 // ======================================
 // <<<<<<<<<LISTENING >>>>>>>>>>>>>>>>>

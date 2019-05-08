@@ -10,11 +10,21 @@
   <body ng-controller="MainController as ctrl">
     <header>
       <h1>{{ctrl.appName}}</h1>
+
       <form ng-submit="ctrl.createUser()">
-        <input type="text" placeholder="user name" ng-model="ctrl.username">
-        <input type="password" placeholder="password" ng-model="ctrl.password">
+        <input type="text" placeholder="user name" ng-model="ctrl.username" />
+        <input type="password" placeholder="password" ng-model="ctrl.password" />
         <button type="submit">Create User</button>
       </form>
+
+      <form ng-submit="ctrl.logIn()">
+        <input type="text" placeholder="user name" ng-model="ctrl.username">
+        <input type="password" placeholder="password" ng-model="ctrl.password">
+        <button type="submit">Log In</button>
+      </form>
+
+      <button type="submit" ng-click="ctrl.logOut()">Log Out</button>
+
       <form ng-submit="ctrl.findPokemon()">
         <input id="inputName" type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>

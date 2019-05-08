@@ -12,14 +12,13 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonStats = [];
   this.pokemonAblilites = [];
   this.myCards = [];
-  this.varDup = ''
   this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964"
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/"
 
 
 
   // ========================================
-  // <<<<<<<<<<<FIND POKEMON FUNCTION>>>>>>>>>
+  // <<<<<<<<SHOW SELECTED POKEMON INFO>>>>>>
   // ========================================
 
   this.findPokemon = ()=>{
@@ -46,7 +45,7 @@ app.controller('MainController', ['$http', function($http){
   }
 
   // ========================================
-  // <<<<<<<<<<<GET POKEMON FUNCTION>>>>>>>>>
+  // <<<<<<<<<<PRINT POKEMON LIST>>>>>>>>
   // ========================================
 
   this.getPokemon = () => {
@@ -98,13 +97,58 @@ app.controller('MainController', ['$http', function($http){
           password: this.password
         }
       }).then(function(res){
+        console.log(res);
         this.username = '';
         this.password = '';
 
       },function(error){
         console.log(error);
-      })
-    }
+      });
+    };
+
+    // ========================================
+    // <<<<<<<<<<<USER LOGIN FUNCTION>>>>>>>>>
+    // ========================================
+    this.logIn = () => {
+      $http({
+        method: 'POST',
+        url: '/sessions',
+        data:{
+          username: this.username,
+          password: this.password
+        }
+      }).then(function(res){
+        console.log(res);
+        this.username = '';
+        this.password = '';
+      },function(error){
+        console.log(error);
+      });
+    };
+
+    this.logOut = () => {
+      $http({
+        method: 'DELETE',
+        url: '/sessions'
+      }).then(function(res){
+        this.loggedIn = false;
+        console.log(this.loggedIn);
+        console.log(res.data);
+      });
+    };
+
+    this.checkLogIn = () => {
+      $http({
+        method: 'GET',
+        url: '/checkLogIn'
+      }).then(function(res){
+        this.username = res.data.currentUser;
+        console.log(this.username);
+      });
+    };
+
+    this.checkLogIn();
+
 
 
 //end MainController
