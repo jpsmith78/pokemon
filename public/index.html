@@ -45,18 +45,18 @@
         </ol>
       </div>
 
-      <form class="card" ng-submit="ctrl.createCollection()" >
+      <form class="card" ng-submit="ctrl.createCollection()" ng-if="ctrl.pokemonName !== ''">
         <h1>{{ctrl.pokemonName}}</h1>
         <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
           <div class="stats">
-            <h3 ng-if="ctrl.pokemonName !== ''">Abilities:</h3>
+            <h3>Abilities:</h3>
             <ul>
               <li ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
             </ul>
           </div>
           <div class="stats">
-            <h3 ng-if="ctrl.pokemonName !== ''">Stats:</h3>
+            <h3>Stats:</h3>
             <ul>
               <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
             </ul>

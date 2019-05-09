@@ -69,8 +69,6 @@ app.controller('MainController', ['$http', function($http){
     controller.pokemonResult = $event.target.innerHTML
   };
 
-
-
   // ========================================
   // <<<<<<<<<<<CREATE USER FUNCTION>>>>>>>>>
   // ========================================
@@ -83,7 +81,7 @@ app.controller('MainController', ['$http', function($http){
         password: this.password
       }
     }).then(function(res){
-      console.log(res);
+      console.log(res.data);
     },function(error){
       console.log(error);
     });
@@ -103,8 +101,7 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
       controller.loggedIn = true;
       controller.checkLogIn();
-      console.log(controller.loggedIn);
-      console.log(controller.username);
+      console.log(res.data);
     },function(error){
       console.log(error);
     });
@@ -123,8 +120,7 @@ app.controller('MainController', ['$http', function($http){
       controller.checkLogIn;
       controller.loggedInUserName = '';
       controller.loggedInUserId = '';
-      console.log(controller.loggedIn);
-      console.log(controller.loggedInUserName);
+      console.log(res.data);
     });
   };
 
@@ -139,7 +135,6 @@ app.controller('MainController', ['$http', function($http){
         if(res.data.currentUser){
           controller.loggedInUserName = res.data.currentUser.username;
           controller.loggedInUserId = res.data.currentUser._id;
-          console.log(controller.loggedInUserId);
         }else{
           controller.loggedInUserName = '';
           controller.loggedInUserId = '';
@@ -164,8 +159,9 @@ app.controller('MainController', ['$http', function($http){
         ownerId: this.loggedInUserId
       }
     }).then(function(res){
-      console.log(res.data);
       controller.getCollections();
+    },function(error){
+      console.log(error);
     });
   };
 
