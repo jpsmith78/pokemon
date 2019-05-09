@@ -40,15 +40,15 @@
           <li ng-repeat="pokemon in ctrl.pokemonList" ng-click="ctrl.moveNameToInputField($event)" ng-bind="pokemon">{{pokemon.name}}</li>
         </ol>
       </div>
-      <div class="card" >
-        <h1>{{ctrl.pokemonName}}</h1>
-        <button ng-click="ctrl.buyPokemon()">Buy</button>
-        <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
+
+      <form class="card" ng-submit="ctrl.createCollection()" >
+        <h1 ng-bind="ctrl.name">{{ctrl.pokemonName}}</h1>
+        <img ng-bind="ctrl.image" class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
           <div class="stats">
             <h3 ng-if="ctrl.pokemonName !== ''">Abilities:</h3>
             <ul>
-              <li ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
+              <li  ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
             </ul>
           </div>
           <div class="stats">
@@ -57,7 +57,9 @@
               <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
             </ul>
           </div>
-        </div>
+          <button type="submit">Buy</button>
+        </form>
+
       </div>
 
       <div class="myCards">

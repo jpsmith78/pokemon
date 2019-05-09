@@ -4,7 +4,7 @@ const app = angular.module('MyApp', []);
 
 app.controller('MainController', ['$http', function($http){
   const controller = this;
-  
+
   this.appName = "Pokemon Fighting Game!";
   this.pokemonList = [];
   this.pokemonSprites = '';
@@ -126,6 +126,10 @@ app.controller('MainController', ['$http', function($http){
       });
     };
 
+    // ========================================
+    // <<<<<<<<<<<USER LOG OUT FUNCTION>>>>>>>>>
+    // ========================================
+
     this.logOut = () => {
       $http({
         method: 'DELETE',
@@ -134,11 +138,15 @@ app.controller('MainController', ['$http', function($http){
         controller.loggedIn = false;
         controller.checkLogIn;
         controller.loggedInUserName = '';
+        controller.loggedInUserId = '';
         console.log(controller.loggedIn);
         console.log(controller.loggedInUserName);
       });
     };
 
+    // ========================================
+    // <<<<<<<<<<<CHECK LOGIN FUNCTION>>>>>>>>>
+    // ========================================
     this.checkLogIn = () => {
       $http({
         method: 'GET',
@@ -146,13 +154,35 @@ app.controller('MainController', ['$http', function($http){
       }).then(function(res){
           if(res.data.currentUser){
             controller.loggedInUserName = res.data.currentUser.username;
+            controller.loggedInUserId = res.data.currentUser._id;
+            console.log(controller.loggedInUserId);
           }else{
             controller.loggedInUserName = '';
+            controller.loggedInUserId = '';
           }
       }, function(error){
         console.log(error);
       });
     };
+
+    // ========================================
+    // <<<<<<CREATE COLLECTION FUNCTION>>>>>>>>>
+    // ========================================
+    this.createCollection = () => {
+      $http({
+        method: 'POST',
+        url: '/collections',
+        data: {
+          name: this.pokemonName,
+          image: this.pokemonSprites,
+          abilities: this.pokemonAblilites,
+          stats: this.pokemonStats,
+          ownerId: this.loggedInUserId
+        }
+      }).then(function(res){
+        console.log(res.data);
+      })
+    }
 
     this.checkLogIn();
 

@@ -30,7 +30,7 @@ app.use(session({
 
 
 app.get('/checkLogIn', (req,res) => {
-      res.json(req.session);  
+      res.json(req.session);
 });
 
 
@@ -40,7 +40,8 @@ app.use('/sessions', sessionsController);
 const usersController = require('./controllers/users.js');
 app.use('/users', usersController);
 
-
+const collectionsController = require('./controllers/collections.js');
+app.use('/collections', collectionsController);
 
 // ======================================
 // <<<<<<<<<LISTENING >>>>>>>>>>>>>>>>>
