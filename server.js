@@ -30,8 +30,8 @@ app.use(session({
 
 
 app.get('/checkLogIn', (req,res) => {
-    res.json(req.session)
-})
+      res.json(req.session);  
+});
 
 
 const sessionsController = require('./controllers/sessions.js');

@@ -11,6 +11,8 @@
     <header>
       <h1>{{ctrl.appName}}</h1>
 
+      <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
+
       <form ng-submit="ctrl.createUser()">
         <input type="text" placeholder="user name" ng-model="ctrl.username" />
         <input type="password" placeholder="password" ng-model="ctrl.password" />

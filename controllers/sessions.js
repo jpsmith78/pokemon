@@ -9,8 +9,8 @@ router.delete('/', (req,res) => {
     res.status(200).json({
       status: 200,
       message: 'logout complete'
-    });
-  });
+    })
+  })
 });
 
 router.post('/', (req,res) => {
@@ -19,15 +19,15 @@ router.post('/', (req,res) => {
       req.session.currentUser = foundUser;
       res.status(201).json({
         status:201,
-        message: 'logged in!'
+        message: 'session created!'
       });
     }else{
       res.status(401).json({
         status: 401,
-        message: 'wrong password!'
+        message: 'login failed!'
       });
-    };
-  });
+    }
+  })
 });
 
 

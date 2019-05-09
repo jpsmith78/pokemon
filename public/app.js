@@ -3,7 +3,8 @@ const app = angular.module('MyApp', []);
 
 
 app.controller('MainController', ['$http', function($http){
-
+  const controller = this;
+  
   this.appName = "Pokemon Fighting Game!";
   this.pokemonList = [];
   this.pokemonSprites = '';
@@ -12,9 +13,10 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonStats = [];
   this.pokemonAblilites = [];
   this.myCards = [];
-  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964"
-  this.baseUrl = "https://pokeapi.co/api/v2/pokemon/"
+  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964";
+  this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
 
+  this.loggedIn = false;
 
 
   // ========================================
@@ -27,15 +29,15 @@ app.controller('MainController', ['$http', function($http){
       url: this.baseUrl + this.pokemonResult
     }).then(response => {
       console.log(response.data);
-        this.pokemonSprites = response.data.sprites.front_default;
-        this.pokemonName = response.data.name
-        this.pokemonAblilites = [];
+        controller.pokemonSprites = response.data.sprites.front_default;
+        controller.pokemonName = response.data.name
+        controller.pokemonAblilites = [];
         for (var i = 0; i < response.data.abilities.length; i++) {
           this.pokemonAblilites.push(response.data.abilities[i]);
         };
-        this.pokemonStats = [];
+        controller.pokemonStats = [];
         for (let j = 0; j < response.data.stats.length; j++){
-          this.pokemonStats.push(response.data.stats[j]);
+          controller.pokemonStats.push(response.data.stats[j]);
         };
 
 
@@ -55,7 +57,7 @@ app.controller('MainController', ['$http', function($http){
     }).then(response =>{
         console.log(response.data);
         for (let i = 0; i < response.data.results.length; i++) {
-          this.pokemonList.push(response.data.results[i].name);
+          controller.pokemonList.push(response.data.results[i].name);
         }
     }, error => {
       console.log(error);
@@ -67,7 +69,7 @@ app.controller('MainController', ['$http', function($http){
   // ========================================
 
   this.moveNameToInputField = ($event) => {
-    this.pokemonResult = $event.target.innerHTML
+    controller.pokemonResult = $event.target.innerHTML
   };
 
   // ========================================
@@ -98,9 +100,6 @@ app.controller('MainController', ['$http', function($http){
         }
       }).then(function(res){
         console.log(res);
-        this.username = '';
-        this.password = '';
-
       },function(error){
         console.log(error);
       });
@@ -118,9 +117,10 @@ app.controller('MainController', ['$http', function($http){
           password: this.password
         }
       }).then(function(res){
-        console.log(res);
-        this.username = '';
-        this.password = '';
+        controller.loggedIn = true;
+        controller.checkLogIn();
+        console.log(controller.loggedIn);
+        console.log(controller.username);
       },function(error){
         console.log(error);
       });
@@ -131,9 +131,11 @@ app.controller('MainController', ['$http', function($http){
         method: 'DELETE',
         url: '/sessions'
       }).then(function(res){
-        this.loggedIn = false;
-        console.log(this.loggedIn);
-        console.log(res.data);
+        controller.loggedIn = false;
+        controller.checkLogIn;
+        controller.loggedInUserName = '';
+        console.log(controller.loggedIn);
+        console.log(controller.loggedInUserName);
       });
     };
 
@@ -142,14 +144,17 @@ app.controller('MainController', ['$http', function($http){
         method: 'GET',
         url: '/checkLogIn'
       }).then(function(res){
-        this.username = res.data.currentUser;
-        console.log(this.username);
+          if(res.data.currentUser){
+            controller.loggedInUserName = res.data.currentUser.username;
+          }else{
+            controller.loggedInUserName = '';
+          }
+      }, function(error){
+        console.log(error);
       });
     };
 
     this.checkLogIn();
-
-
 
 //end MainController
 }]);
