@@ -8,8 +8,10 @@
     <title></title>
   </head>
   <body ng-controller="MainController as ctrl">
+
     <header>
-      <h1>{{ctrl.appName}}</h1>
+
+      <h1>Pokemon Fighting Game!</h1>
 
       <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
 
@@ -31,7 +33,9 @@
         <input id="inputName" type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>
       </form>
+
     </header>
+
     <div class="main">
 
       <div >
@@ -42,13 +46,13 @@
       </div>
 
       <form class="card" ng-submit="ctrl.createCollection()" >
-        <h1 ng-bind="ctrl.name">{{ctrl.pokemonName}}</h1>
-        <img ng-bind="ctrl.image" class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
+        <h1>{{ctrl.pokemonName}}</h1>
+        <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
           <div class="stats">
             <h3 ng-if="ctrl.pokemonName !== ''">Abilities:</h3>
             <ul>
-              <li  ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
+              <li ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
             </ul>
           </div>
           <div class="stats">
@@ -57,14 +61,31 @@
               <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
             </ul>
           </div>
-          <button type="submit">Buy</button>
+          <button type="submit" ng-if="ctrl.loggedInUserId">Buy</button>
         </form>
 
       </div>
 
       <div class="myCards">
-        <hr>
-        <h1>My Cards</h1>
+        <div ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUserId === pokemon.ownerId">
+            <h3>{{pokemon.name}}</h3>
+            <img src="{{pokemon.image}}" alt="{{pokemon.name}}">
+            <ul>
+              <h3>Abilities</h3>
+              <li>{{pokemon.abilities[0].ability.name}}</li>
+              <li>{{pokemon.abilities[1].ability.name}}</li>
+              <li>{{pokemon.abilities[2].ability.name}}</li>
+            </ul>
+            <ul>
+              <h3>Stats</h3>
+              <li>{{pokemon.stats[0].stat.name}}: {{pokemon.stats[0].base_stat}}</li>
+              <li>{{pokemon.stats[1].stat.name}}: {{pokemon.stats[1].base_stat}}</li>
+              <li>{{pokemon.stats[2].stat.name}}: {{pokemon.stats[2].base_stat}}</li>
+              <li>{{pokemon.stats[3].stat.name}}: {{pokemon.stats[3].base_stat}}</li>
+              <li>{{pokemon.stats[4].stat.name}}: {{pokemon.stats[4].base_stat}}</li>
+              <li>{{pokemon.stats[5].stat.name}}: {{pokemon.stats[5].base_stat}}</li>
+            </ul>
+        </div>
       </div>
     </div>
 
