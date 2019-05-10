@@ -50,7 +50,6 @@ app.controller('MainController', ['$http', function($http){
       method: 'GET',
       url: this.pokemonURL
     }).then(response =>{
-        console.log(response.data);
         for (let i = 0; i < response.data.results.length; i++) {
           controller.pokemonList.push(response.data.results[i].name);
         }
@@ -173,10 +172,27 @@ app.controller('MainController', ['$http', function($http){
       url: '/collections'
     }).then(function(res){
       controller.collections = res.data;
+      console.log(controller.collections);
     },function(error){
       console.log(error);
     });
   };
+
+  // ========================================
+  // <<<<<<GET USERS FUNCTION>>>>>>>>>
+  // ========================================
+  this.getUsers = () => {
+    $http({
+      method: 'GET',
+      url: '/users'
+    }).then(function(res){
+
+      controller.users = res.data;
+      console.log(controller.users);
+    },function(error){
+      console.log(error);
+    })
+  }
 
   // ========================================
   // <<<<<<DELETE COLLECTION FUNCTION>>>>>>>>>
@@ -187,14 +203,14 @@ app.controller('MainController', ['$http', function($http){
       method: 'DELETE',
       url: '/collections/'+ pokemon._id
     }).then(function(res){
-      console.log(res.data._id);
       controller.getCollections();
     },function(error){
       console.log(error);
     });
   };
 
-
+  this.getUsers();
+  this.getPokemon();
   this.getCollections();
   this.checkLogIn();
 

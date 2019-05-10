@@ -1,5 +1,6 @@
 * {
   border: 2px solid gold;
+  text-align: center;
 }
 img {
   width: 100px;
@@ -30,7 +31,6 @@ ul {
 }
 .myCards > h2 {
   width: 100%;
-  text-align: center;
 }
 .card, .myCard {
   display: flex;
@@ -70,4 +70,12 @@ ul {
 .deckList > li {
   width: 100px;
   margin: 20px;
+}
+.userNames {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.userNames > h3 {
+  width: 100%;
 }

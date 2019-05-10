@@ -29,21 +29,21 @@
 
       <button type="submit" ng-click="ctrl.logOut()">Log Out</button>
 
-      <form ng-submit="ctrl.findPokemon()">
-        <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
-        <button type="submit">Submit</button><br/>
-      </form>
-
     </header>
 
     <div class="main">
 
       <div >
-        <h2 ng-click="ctrl.getPokemon()">Get Pokemon List</h2>
+        <h2>Pokemon List</h2>
         <ol class="deckList">
           <li ng-repeat="pokemon in ctrl.pokemonList" ng-click="ctrl.moveNameToInputField($event)" ng-bind="pokemon">{{pokemon.name}}</li>
         </ol>
       </div>
+
+      <form ng-submit="ctrl.findPokemon()">
+        <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
+        <button type="submit">Submit</button><br/>
+      </form>
 
       <form class="card" ng-submit="ctrl.createCollection()" ng-if="ctrl.pokemonName !== ''">
         <h1>{{ctrl.pokemonName}}</h1>
@@ -89,15 +89,19 @@
             <button ng-click="ctrl.deleteCollection(pokemon)">Delete</button>
         </div>
       </div>
+
+      <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUserId !== user._id ">
+        <h3 >{{user.username}}</h3>
+        <div class="userCollections" ng-repeat="collection in ctrl.collections "ng-if="user._id === collection.ownerId">
+            <h4>{{collection.name}}</h4>
+            <img src="{{collection.image}}" alt="{{collection.name}}">
+        </div>
+
+      </div>
+
+
+
     </div>
-
-
-
-
-
-
-
-
 
   </body>
 </html>
