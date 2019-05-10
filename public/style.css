@@ -2,19 +2,19 @@
   border: 2px solid gold;
 }
 img {
-  width: 200px;
+  width: 100px;
   border: 2px solid black;
   border-radius: 6px;
 }
 ol:hover{
   cursor: pointer;
 }
-h3, li {
+h1, h2, h3, li {
   text-transform: capitalize;
 }
 .main {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 ul {
   display: flex;
@@ -22,6 +22,15 @@ ul {
   padding-left: 0px;
   list-style: none;
   font-size: 14px;
+}
+.myCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.myCards > h2 {
+  width: 100%;
+  text-align: center;
 }
 .card, .myCard {
   display: flex;
@@ -53,7 +62,7 @@ ul {
 .deckList {
   display: flex;
   flex-direction: row;
-  width: 800px;
+  width: 90%;
   height: 100px;
   overflow-x: scroll;
   margin: auto;

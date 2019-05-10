@@ -15,4 +15,10 @@ router.post('/', (req,res) => {
   })
 })
 
+router.delete('/:id', (req,res) => {
+  Collection.findByIdAndRemove(req.params.id, (err,deletedCollection) => {
+    res.json(deletedCollection);
+  });
+});
+
 module.exports = router;

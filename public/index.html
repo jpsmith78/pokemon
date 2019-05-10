@@ -10,7 +10,7 @@
   <body ng-controller="MainController as ctrl">
 
     <header>
-
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="hi">
       <h1>Pokemon Fighting Game!</h1>
 
       <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
@@ -30,7 +30,7 @@
       <button type="submit" ng-click="ctrl.logOut()">Log Out</button>
 
       <form ng-submit="ctrl.findPokemon()">
-        <input id="inputName" type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
+        <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>
       </form>
 
@@ -67,7 +67,8 @@
       </div>
 
       <div class="myCards">
-        <div ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUserId === pokemon.ownerId">
+        <h2 ng-if="ctrl.loggedInUserName">{{ctrl.loggedInUserName}}'s Pokemon</h2>
+        <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUserId === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>
             <img src="{{pokemon.image}}" alt="{{pokemon.name}}">
             <ul>
@@ -85,6 +86,7 @@
               <li>{{pokemon.stats[4].stat.name}}: {{pokemon.stats[4].base_stat}}</li>
               <li>{{pokemon.stats[5].stat.name}}: {{pokemon.stats[5].base_stat}}</li>
             </ul>
+            <button ng-click="ctrl.deleteCollection(pokemon)">Delete</button>
         </div>
       </div>
     </div>

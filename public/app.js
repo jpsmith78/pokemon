@@ -36,8 +36,6 @@ app.controller('MainController', ['$http', function($http){
         for (let j = 0; j < response.data.stats.length; j++){
           controller.pokemonStats.push(response.data.stats[j]);
         };
-
-
     }, error => {
       console.log(error);
     })
@@ -180,6 +178,21 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+  // ========================================
+  // <<<<<<DELETE COLLECTION FUNCTION>>>>>>>>>
+  // ========================================
+
+  this.deleteCollection = (pokemon) => {
+    $http({
+      method: 'DELETE',
+      url: '/collections/'+ pokemon._id
+    }).then(function(res){
+      console.log(res.data._id);
+      controller.getCollections();
+    },function(error){
+      console.log(error);
+    });
+  };
 
 
   this.getCollections();
