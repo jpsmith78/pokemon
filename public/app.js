@@ -14,6 +14,8 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964";
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
   this.loggedIn = false;
+  this.showCreateForm = false;
+  this.showLogInForm = false;
 
 
   // ========================================
@@ -84,6 +86,23 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+
+  // ========================================
+  // <<<<<<GET USERS FUNCTION>>>>>>>>>
+  // ========================================
+  this.getUsers = () => {
+    $http({
+      method: 'GET',
+      url: '/users'
+    }).then(function(res){
+
+      controller.users = res.data;
+      console.log(controller.users);
+    },function(error){
+      console.log(error);
+    })
+  }
+
   // ========================================
   // <<<<<<<<<<<USER LOGIN FUNCTION>>>>>>>>>
   // ========================================
@@ -119,6 +138,21 @@ app.controller('MainController', ['$http', function($http){
       controller.loggedInUserId = '';
       console.log(res.data);
     });
+  };
+
+
+  // ========================================
+  // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
+  // ========================================
+  this.showCreateUsersForm = () => {
+    this.showCreateForm = !this.showCreateForm;
+  };
+
+  // ========================================
+  // <<<<<<<<<<<SHOW LOG IN FUNCTION>>>>>>>>>
+  // ========================================
+  this.showLogInUsersForm = () => {
+    this.showLogInForm = !this.showLogInForm;
   };
 
   // ========================================
@@ -178,21 +212,6 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
-  // ========================================
-  // <<<<<<GET USERS FUNCTION>>>>>>>>>
-  // ========================================
-  this.getUsers = () => {
-    $http({
-      method: 'GET',
-      url: '/users'
-    }).then(function(res){
-
-      controller.users = res.data;
-      console.log(controller.users);
-    },function(error){
-      console.log(error);
-    })
-  }
 
   // ========================================
   // <<<<<<DELETE COLLECTION FUNCTION>>>>>>>>>

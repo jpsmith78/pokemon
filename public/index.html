@@ -15,19 +15,32 @@
 
       <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
 
-      <form ng-submit="ctrl.createUser()">
+      <!-- ======================
+      <<<<<<CREATE USER FORM>>>>>
+      =========================== -->
+      <button ng-if="!ctrl.showCreateForm" ng-click="ctrl.showCreateUsersForm()">Create User</button>
+      <button ng-if="ctrl.showCreateForm" ng-click="ctrl.showCreateUsersForm()">Hide Create User</button>
+
+      <form ng-if="ctrl.showCreateForm" ng-submit="ctrl.createUser()">
         <input type="text" placeholder="user name" ng-model="ctrl.username" />
         <input type="password" placeholder="password" ng-model="ctrl.password" />
         <button type="submit">Create User</button>
       </form>
 
-      <form ng-submit="ctrl.logIn()">
+      <!-- ======================
+      <<<<<<LOG IN USER FORM>>>>>
+      =========================== -->
+
+      <button ng-if="!ctrl.showLogInForm" ng-click="ctrl.showLogInUsersForm()">Log In</button>
+      <button ng-if="ctrl.showLogInForm && !ctrl.loggedIn" ng-click="ctrl.showLogInUsersForm()">Hide Log In</button>
+
+      <form ng-if="!ctrl.loggedIn && ctrl.showLogInForm"ng-submit="ctrl.logIn()">
         <input type="text" placeholder="user name" ng-model="ctrl.username">
         <input type="password" placeholder="password" ng-model="ctrl.password">
         <button type="submit">Log In</button>
       </form>
 
-      <button type="submit" ng-click="ctrl.logOut()">Log Out</button>
+      <button type="submit" ng-if="ctrl.loggedIn" ng-click="ctrl.logOut()">Log Out</button>
 
     </header>
 
