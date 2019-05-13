@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 const collectionSchema = Schema({
   name: String,
   image: String,
+  types: {type: Array,
+    items: {
+      type: String
+    }
+  },
   abilities: {type: Array,
     items: {
       type: String

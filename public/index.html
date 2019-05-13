@@ -10,41 +10,49 @@
   <body ng-controller="MainController as ctrl">
 
     <header>
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="hi">
       <h1>Pokemon Fighting Game!</h1>
 
       <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
 
-      <!-- ======================
-      <<<<<<CREATE USER FORM>>>>>
-      =========================== -->
-      <button ng-if="!ctrl.showCreateForm" ng-click="ctrl.showCreateUsersForm()">Create User</button>
-      <button ng-if="ctrl.showCreateForm" ng-click="ctrl.showCreateUsersForm()">Hide Create User</button>
+      <nav>
+        <div class="nav-form">
+          <!-- ======================
+          <<<<<<CREATE USER FORM>>>>>
+          =========================== -->
+          <button ng-if="!ctrl.showCreateForm && !ctrl.loggedIn" ng-click="ctrl.showCreateUsersForm()">Create User</button>
+          <button ng-if="ctrl.showCreateForm && !ctrl.loggedIn" ng-click="ctrl.showCreateUsersForm()">Hide Create User</button>
 
-      <form ng-if="ctrl.showCreateForm" ng-submit="ctrl.createUser()">
-        <input type="text" placeholder="user name" ng-model="ctrl.username" />
-        <input type="password" placeholder="password" ng-model="ctrl.password" />
-        <button type="submit">Create User</button>
-      </form>
+          <form ng-if="ctrl.showCreateForm && !ctrl.loggedIn" ng-submit="ctrl.createUser()">
+            <input type="text" placeholder="user name" ng-model="ctrl.username" />
+            <input type="password" placeholder="password" ng-model="ctrl.password" />
+            <button type="submit">Create User</button>
+          </form>
+        </div>
 
-      <!-- ======================
-      <<<<<<LOG IN USER FORM>>>>>
-      =========================== -->
+        <div class="nav-form">
+          <!-- ======================
+          <<<<<<LOG IN USER FORM>>>>>
+          =========================== -->
 
-      <button ng-if="!ctrl.showLogInForm" ng-click="ctrl.showLogInUsersForm()">Log In</button>
-      <button ng-if="ctrl.showLogInForm && !ctrl.loggedIn" ng-click="ctrl.showLogInUsersForm()">Hide Log In</button>
+          <button ng-if="!ctrl.showLogInForm" ng-click="ctrl.showLogInUsersForm()">Log In</button>
+          <button ng-if="ctrl.showLogInForm && !ctrl.loggedIn" ng-click="ctrl.showLogInUsersForm()">Hide Log In</button>
 
-      <form ng-if="!ctrl.loggedIn && ctrl.showLogInForm"ng-submit="ctrl.logIn()">
-        <input type="text" placeholder="user name" ng-model="ctrl.username">
-        <input type="password" placeholder="password" ng-model="ctrl.password">
-        <button type="submit">Log In</button>
-      </form>
+          <form ng-if="!ctrl.loggedIn && ctrl.showLogInForm" ng-submit="ctrl.logIn()">
+            <input type="text" placeholder="user name" ng-model="ctrl.username">
+            <input type="password" placeholder="password" ng-model="ctrl.password">
+            <button type="submit">Log In</button>
+          </form>
+        </div>
 
-      <button type="submit" ng-if="ctrl.loggedIn" ng-click="ctrl.logOut()">Log Out</button>
-
+      </nav>
+      <button class="logout" type="submit" ng-if="ctrl.loggedIn" ng-click="ctrl.logOut()">Log Out</button>
     </header>
 
     <div class="main">
+
+      <!-- ======================
+      <<<<<<POKEMON LIST>>>>>
+      =========================== -->
 
       <div >
         <h2>Pokemon List</h2>
@@ -53,15 +61,29 @@
         </ol>
       </div>
 
+      <!-- =======================
+      <<<<<<SUBMIT LIST ITEM>>>>>
+      =========================== -->
+
       <form ng-submit="ctrl.findPokemon()">
         <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>
       </form>
 
+      <!-- ======================
+      <<<<VIEW SELECTED LIST ITEM>>>>>
+      =========================== -->
+
       <form class="card" ng-submit="ctrl.createCollection()" ng-if="ctrl.pokemonName !== ''">
         <h1>{{ctrl.pokemonName}}</h1>
         <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
+          <div class="stats">
+            <h3>Types:</h3>
+            <ul>
+              <li ng-repeat="pokemon in ctrl.pokemonTypes">{{pokemon.type.name}}</li>
+            </ul>
+          </div>
           <div class="stats">
             <h3>Abilities:</h3>
             <ul>
@@ -74,16 +96,31 @@
               <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
             </ul>
           </div>
+
+          <!-- ======================
+          <<<<<BUY SELECTED ITEM>>>>>
+          =========================== -->
           <button type="submit" ng-if="ctrl.loggedInUserId">Buy</button>
         </form>
 
       </div>
 
+      <!-- ======================
+      <<<<<<CURRENT USER POKEMON>>>>>
+      =========================== -->
+
       <div class="myCards">
+        <h2 ng-if="ctrl.loggedInUserName">{{ctrl.loggedInUserName}}'s Pokeballs: {{ctrl.loggedInPokeBalls}}</h2>
         <h2 ng-if="ctrl.loggedInUserName">{{ctrl.loggedInUserName}}'s Pokemon</h2>
         <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUserId === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>
             <img src="{{pokemon.image}}" alt="{{pokemon.name}}">
+            <ul>
+              <h3>Types</h3>
+              <li>{{pokemon.types[0].type.name}}</li>
+              <li>{{pokemon.types[1].type.name}}</li>
+
+            </ul>
             <ul>
               <h3>Abilities</h3>
               <li>{{pokemon.abilities[0].ability.name}}</li>
@@ -103,9 +140,15 @@
         </div>
       </div>
 
+      <!-- ======================
+      <<<<<<ALL OTHER USERS INFO>>>>>
+      =========================== -->
+
       <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUserId !== user._id ">
         <h3 >{{user.username}}</h3>
-        <div class="userCollections" ng-repeat="collection in ctrl.collections "ng-if="user._id === collection.ownerId">
+        <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
+        {{user.pokeBalls}}</h3>
+        <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
             <h4>{{collection.name}}</h4>
             <img src="{{collection.image}}" alt="{{collection.name}}">
         </div>

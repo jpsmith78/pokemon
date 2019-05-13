@@ -9,14 +9,15 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonName = '';
   this.pokemonResult = '';
   this.pokemonStats = [];
+  this.pokemonTypes = [];
   this.pokemonAblilites = [];
   this.myCards = [];
-  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=964";
+  this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=897";
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
   this.loggedIn = false;
   this.showCreateForm = false;
   this.showLogInForm = false;
-
+  this.initialNumber = 10;
 
   // ========================================
   // <<<<<<<<SHOW SELECTED POKEMON INFO>>>>>>
@@ -30,9 +31,13 @@ app.controller('MainController', ['$http', function($http){
       console.log(response.data);
         controller.pokemonSprites = response.data.sprites.front_default;
         controller.pokemonName = response.data.name
+        controller.pokemonTypes = [];
+        for (let h = 0; h < response.data.types.length; h++) {
+          controller.pokemonTypes.push(response.data.types[h])
+        };
         controller.pokemonAblilites = [];
-        for (var i = 0; i < response.data.abilities.length; i++) {
-          this.pokemonAblilites.push(response.data.abilities[i]);
+        for (let i = 0; i < response.data.abilities.length; i++) {
+          controller.pokemonAblilites.push(response.data.abilities[i]);
         };
         controller.pokemonStats = [];
         for (let j = 0; j < response.data.stats.length; j++){
@@ -77,7 +82,8 @@ app.controller('MainController', ['$http', function($http){
       url: '/users',
       data:{
         username: this.username,
-        password: this.password
+        password: this.password,
+        pokeBalls: this.initialNumber
       }
     }).then(function(res){
       console.log(res.data);
@@ -95,7 +101,6 @@ app.controller('MainController', ['$http', function($http){
       method: 'GET',
       url: '/users'
     }).then(function(res){
-
       controller.users = res.data;
       console.log(controller.users);
     },function(error){
@@ -166,6 +171,7 @@ app.controller('MainController', ['$http', function($http){
         if(res.data.currentUser){
           controller.loggedInUserName = res.data.currentUser.username;
           controller.loggedInUserId = res.data.currentUser._id;
+          controller.loggedInPokeBalls = res.data.currentUser.pokeBalls;
         }else{
           controller.loggedInUserName = '';
           controller.loggedInUserId = '';
@@ -185,6 +191,7 @@ app.controller('MainController', ['$http', function($http){
       data: {
         name: this.pokemonName,
         image: this.pokemonSprites,
+        types: this.pokemonTypes,
         abilities: this.pokemonAblilites,
         stats: this.pokemonStats,
         ownerId: this.loggedInUserId
