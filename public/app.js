@@ -18,6 +18,7 @@ app.controller('MainController', ['$http', function($http){
   this.showCreateForm = false;
   this.showLogInForm = false;
   this.initialNumber = 10;
+  this.currentNumber = this.initialNumber;
 
   // ========================================
   // <<<<<<<<SHOW SELECTED POKEMON INFO>>>>>>
@@ -87,6 +88,7 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       console.log(res.data);
+      controller.showCreateForm = false;
     },function(error){
       console.log(error);
     });
@@ -145,6 +147,20 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+  // ========================================
+  // <<<<<<<SPEND POKEBALL FUNCTION>>>>>>>>>
+  // ========================================
+  this.spendPokeballs = (user) => {
+    $http({
+      method: 'PUT',
+      url: '/users/'+ user,
+      data: {
+        pokeBalls: controller.currentNumber - 1
+      }
+    }).then(function(res){
+      console.log(res.data.pokeBalls);
+    })
+  }
 
   // ========================================
   // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
@@ -175,6 +191,7 @@ app.controller('MainController', ['$http', function($http){
         }else{
           controller.loggedInUserName = '';
           controller.loggedInUserId = '';
+          controller.loggedInPokeBalls = '';
         }
     }, function(error){
       console.log(error);

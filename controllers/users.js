@@ -14,6 +14,12 @@ router.post('/', (req,res) => {
   });
 });
 
+router.put('/:id', (req,res) => {
+  User.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedUser) => {
+    res.json(updatedUser);
+  });
+});
+
 router.get('/', (req,res) => {
   User.find({}, (err,foundUser) => {
     res.json(foundUser);

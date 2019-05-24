@@ -69,6 +69,9 @@
         <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>
       </form>
+      <form ng-submit="ctrl.spendPokeballs(ctrl.loggedInUserId)">
+        <button type="submit">spend pokeballs</button>
+      </form>
 
       <!-- ======================
       <<<<VIEW SELECTED LIST ITEM>>>>>
