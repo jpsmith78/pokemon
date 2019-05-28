@@ -141,8 +141,8 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
       controller.loggedIn = false;
       controller.checkLogIn;
-      controller.loggedInUserName = '';
-      controller.loggedInUserId = '';
+      controller.loggedInUser = '';
+
       console.log(res.data);
     });
   };
@@ -153,15 +153,34 @@ app.controller('MainController', ['$http', function($http){
   this.spendPokeballs = (user) => {
     $http({
       method: 'PUT',
-      url: '/users/'+ user,
+      url: '/users/'+ user._id,
       data: {
-        pokeBalls: controller.currentNumber - 1
+        pokeBalls: user.pokeBalls
       }
     }).then(function(res){
-      console.log(res.data.pokeBalls);
-    })
-  }
+        if(user.pokeBalls > 0){
+          res.data.pokeBalls = user.pokeBalls--
+        };
+    });
+  };
 
+  // ========================================
+  // <<<<<<<RECOVER POKEBALL FUNCTION>>>>>>>>>
+  // ========================================
+  this.recoverPokeballs = (user) => {
+    $http({
+      method: 'PUT',
+      url: '/users/'+ user._id,
+      data: {
+        pokeBalls: user.pokeBalls
+      }
+    }).then(function(res){
+        if(user.pokeBalls < 10){
+          res.data.pokeBalls = user.pokeBalls++
+        };
+        controller.getCollections();
+    });
+  };
   // ========================================
   // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
   // ========================================
@@ -185,13 +204,9 @@ app.controller('MainController', ['$http', function($http){
       url: '/checkLogIn'
     }).then(function(res){
         if(res.data.currentUser){
-          controller.loggedInUserName = res.data.currentUser.username;
-          controller.loggedInUserId = res.data.currentUser._id;
-          controller.loggedInPokeBalls = res.data.currentUser.pokeBalls;
+          controller.loggedInUser = res.data.currentUser;
         }else{
-          controller.loggedInUserName = '';
-          controller.loggedInUserId = '';
-          controller.loggedInPokeBalls = '';
+          controller.loggedInUser = '';
         }
     }, function(error){
       console.log(error);
@@ -211,10 +226,11 @@ app.controller('MainController', ['$http', function($http){
         types: this.pokemonTypes,
         abilities: this.pokemonAblilites,
         stats: this.pokemonStats,
-        ownerId: this.loggedInUserId
+        ownerId: this.loggedInUser._id
       }
     }).then(function(res){
       controller.getCollections();
+      controller.spendPokeballs(controller.loggedInUser);
     },function(error){
       console.log(error);
     });

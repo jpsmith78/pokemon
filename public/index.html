@@ -12,7 +12,7 @@
     <header>
       <h1>Pokemon Fighting Game!</h1>
 
-      <h2 ng-if="ctrl.loggedInUserName">Welcome {{ctrl.loggedInUserName}}</h2>
+      <h2 ng-if="ctrl.loggedInUser">Welcome {{ctrl.loggedInUser.username}}</h2>
 
       <nav>
         <div class="nav-form">
@@ -69,8 +69,8 @@
         <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
         <button type="submit">Submit</button><br/>
       </form>
-      <form ng-submit="ctrl.spendPokeballs(ctrl.loggedInUserId)">
-        <button type="submit">spend pokeballs</button>
+      <form ng-submit="ctrl.recoverPokeballs(ctrl.loggedInUser)">
+        <button type="submit">recover pokeballs</button>
       </form>
 
       <!-- ======================
@@ -103,7 +103,7 @@
           <!-- ======================
           <<<<<BUY SELECTED ITEM>>>>>
           =========================== -->
-          <button type="submit" ng-if="ctrl.loggedInUserId">Buy</button>
+          <button type="submit" ng-if="ctrl.loggedInUser">Buy</button>
         </form>
 
       </div>
@@ -113,11 +113,11 @@
       =========================== -->
 
       <div class="myCards">
-        <h2 ng-if="ctrl.loggedInUserName">{{ctrl.loggedInUserName}}'s Pokeballs: {{ctrl.loggedInPokeBalls}}</h2>
-        <h2 ng-if="ctrl.loggedInUserName">{{ctrl.loggedInUserName}}'s Pokemon</h2>
-        <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUserId === pokemon.ownerId">
+        <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
+        <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokemon</h2>
+        <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUser._id === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>
-            <img src="{{pokemon.image}}" alt="{{pokemon.name}}">
+            <img src="{{pokemon.image}}" alt="{{pokemon.name}}" />
             <ul>
               <h3>Types</h3>
               <li>{{pokemon.types[0].type.name}}</li>
@@ -147,7 +147,7 @@
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
 
-      <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUserId !== user._id ">
+      <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id ">
         <h3 >{{user.username}}</h3>
         <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
         {{user.pokeBalls}}</h3>
