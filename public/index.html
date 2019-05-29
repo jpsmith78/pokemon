@@ -79,7 +79,7 @@
 
       <form class="card" ng-submit="ctrl.createCollection()" ng-if="ctrl.pokemonName !== ''">
         <h1>{{ctrl.pokemonName}}</h1>
-        <img class="image"  src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
+        <img class="image" src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
           <div class="stats">
             <h3>Types:</h3>
@@ -103,7 +103,7 @@
           <!-- ======================
           <<<<<BUY SELECTED ITEM>>>>>
           =========================== -->
-          <button type="submit" ng-if="ctrl.loggedInUser">Buy</button>
+          <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls">Buy</button>
         </form>
 
       </div>

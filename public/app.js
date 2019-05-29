@@ -125,6 +125,10 @@ app.controller('MainController', ['$http', function($http){
       controller.loggedIn = true;
       controller.checkLogIn();
       console.log(res.data);
+      setInterval(function(){
+        controller.recoverPokeballs(controller.loggedInUser);
+        
+      }, 3000);
     },function(error){
       console.log(error);
     });
@@ -142,7 +146,8 @@ app.controller('MainController', ['$http', function($http){
       controller.loggedIn = false;
       controller.checkLogIn;
       controller.loggedInUser = '';
-
+      controller.getCollections();
+      controller.getUsers();
       console.log(res.data);
     });
   };
@@ -158,9 +163,9 @@ app.controller('MainController', ['$http', function($http){
         pokeBalls: user.pokeBalls
       }
     }).then(function(res){
-        if(user.pokeBalls > 0){
-          res.data.pokeBalls = user.pokeBalls--
-        };
+      if(user.pokeBalls > 0){
+        res.data.pokeBalls = user.pokeBalls--
+      };
     });
   };
 
@@ -175,12 +180,20 @@ app.controller('MainController', ['$http', function($http){
         pokeBalls: user.pokeBalls
       }
     }).then(function(res){
-        if(user.pokeBalls < 10){
-          res.data.pokeBalls = user.pokeBalls++
-        };
-        controller.getCollections();
+      if(user.pokeBalls < 10){
+            user.pokeBalls++
+            res.data.pokeBalls = user.pokeBalls;
+            console.log(user.pokeBalls);
+            console.log(res.data.pokeBalls);
+            controller.getCollections();
+            controller.getUsers();
+      };
     });
   };
+
+
+
+
   // ========================================
   // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
   // ========================================
@@ -229,8 +242,10 @@ app.controller('MainController', ['$http', function($http){
         ownerId: this.loggedInUser._id
       }
     }).then(function(res){
-      controller.getCollections();
-      controller.spendPokeballs(controller.loggedInUser);
+      if(controller.loggedInUser.pokeBalls > 0){
+        controller.spendPokeballs(controller.loggedInUser);
+        controller.getCollections();
+      };
     },function(error){
       console.log(error);
     });
@@ -268,10 +283,11 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+  this.checkLogIn();
   this.getUsers();
   this.getPokemon();
   this.getCollections();
-  this.checkLogIn();
+  this.logOut();
 
 //end MainController
 }]);
