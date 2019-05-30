@@ -105,6 +105,7 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
       controller.users = res.data;
       console.log(controller.users);
+
     },function(error){
       console.log(error);
     })
@@ -125,10 +126,7 @@ app.controller('MainController', ['$http', function($http){
       controller.loggedIn = true;
       controller.checkLogIn();
       console.log(res.data);
-      setInterval(function(){
-        controller.recoverPokeballs(controller.loggedInUser);
-        
-      }, 3000);
+
     },function(error){
       console.log(error);
     });
@@ -143,12 +141,11 @@ app.controller('MainController', ['$http', function($http){
       method: 'DELETE',
       url: '/sessions'
     }).then(function(res){
-      controller.loggedIn = false;
-      controller.checkLogIn;
-      controller.loggedInUser = '';
-      controller.getCollections();
-      controller.getUsers();
-      console.log(res.data);
+        controller.loggedIn = false;
+        controller.loggedInUser = '';
+        controller.getCollections();
+        controller.getUsers();
+        console.log(res.data);
     });
   };
 
@@ -164,7 +161,8 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       if(user.pokeBalls > 0){
-        res.data.pokeBalls = user.pokeBalls--
+        user.pokeBalls--;
+        res.data.pokeBalls--;
       };
     });
   };
@@ -181,12 +179,8 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       if(user.pokeBalls < 10){
-            user.pokeBalls++
-            res.data.pokeBalls = user.pokeBalls;
-            console.log(user.pokeBalls);
-            console.log(res.data.pokeBalls);
-            controller.getCollections();
-            controller.getUsers();
+            user.pokeBalls++;
+            res.data.pokeBalls++;
       };
     });
   };
@@ -242,6 +236,12 @@ app.controller('MainController', ['$http', function($http){
         ownerId: this.loggedInUser._id
       }
     }).then(function(res){
+      let statVariable = 0;
+      for(let i = 0; i < res.data.stats.length; i++){
+        statVariable+=res.data.stats[i].base_stat
+      };
+      console.log(statVariable);
+      console.log(res.data.stats[0].base_stat  );
       if(controller.loggedInUser.pokeBalls > 0){
         controller.spendPokeballs(controller.loggedInUser);
         controller.getCollections();
@@ -283,6 +283,11 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+  // let myInt = setInterval(function(){
+  //   for(let i = 0; i < controller.users.length; i++){
+  //     controller.recoverPokeballs(controller.users[i]);
+  //   }
+  // }, 10000);
   this.checkLogIn();
   this.getUsers();
   this.getPokemon();
