@@ -5,6 +5,7 @@ const app = angular.module('MyApp', []);
 app.controller('MainController', ['$http', function($http){
   const controller = this;
   this.pokemonList = [];
+  this.pokemon = ''
   this.pokemonSprites = '';
   this.pokemonName = '';
   this.pokemonResult = '';
@@ -186,8 +187,6 @@ app.controller('MainController', ['$http', function($http){
   };
 
 
-
-
   // ========================================
   // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
   // ========================================
@@ -233,19 +232,33 @@ app.controller('MainController', ['$http', function($http){
         types: this.pokemonTypes,
         abilities: this.pokemonAblilites,
         stats: this.pokemonStats,
-        ownerId: this.loggedInUser._id
+        ownerId: this.loggedInUser._id,
+        combinedStats: 0
       }
     }).then(function(res){
       let statVariable = 0;
       for(let i = 0; i < res.data.stats.length; i++){
         statVariable+=res.data.stats[i].base_stat
       };
+      res.data.combinedStats = statVariable;
+      let lowPercentChance = .25
+      let randomMath = parseFloat(Math.random()*1).toFixed(2);
+      console.log(lowPercentChance);
+      console.log(randomMath);
+      console.log(res.data.combinedStats);
       console.log(statVariable);
       console.log(res.data.stats[0].base_stat  );
-      if(controller.loggedInUser.pokeBalls > 0){
+      if( randomMath < lowPercentChance){
+        if(controller.loggedInUser.pokeBalls > 0){
+          controller.spendPokeballs(controller.loggedInUser);
+          controller.getCollections();
+        };
+      }else {
+        controller.deleteCollection(res.data);
         controller.spendPokeballs(controller.loggedInUser);
+        alert('Try Again');
         controller.getCollections();
-      };
+      }
     },function(error){
       console.log(error);
     });
@@ -293,6 +306,5 @@ app.controller('MainController', ['$http', function($http){
   this.getPokemon();
   this.getCollections();
   this.logOut();
-
 //end MainController
 }]);

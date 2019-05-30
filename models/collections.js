@@ -19,7 +19,8 @@ const collectionSchema = Schema({
       type: String
     }
   },
-  ownerId: String
+  ownerId: String,
+  combinedStats: Number
 });
 
 const Collection = mongoose.model('Collection', collectionSchema);
