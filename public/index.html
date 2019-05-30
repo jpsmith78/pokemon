@@ -49,6 +49,16 @@
     </header>
 
     <div class="main">
+      <!-- ======================
+      <<<<<<MODAL>>>>>
+      =========================== -->
+      <div class="modal-background" ng-if="ctrl.showModal">
+        <div class="modal" >
+          <h3>Capture Failed.  Try Again</h3>
+            <button ng-click="ctrl.showModalFunction()">OK</button>
+        </div>
+      </div>
+
 
       <!-- ======================
       <<<<<<POKEMON LIST>>>>>

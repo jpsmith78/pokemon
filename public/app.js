@@ -18,8 +18,8 @@ app.controller('MainController', ['$http', function($http){
   this.loggedIn = false;
   this.showCreateForm = false;
   this.showLogInForm = false;
+  this.showModal = false;
   this.initialNumber = 10;
-  this.currentNumber = this.initialNumber;
 
   // ========================================
   // <<<<<<<<SHOW SELECTED POKEMON INFO>>>>>>
@@ -202,6 +202,12 @@ app.controller('MainController', ['$http', function($http){
   };
 
   // ========================================
+  // <<<<<<<<<<<SHOW MODAL FUNCTION>>>>>>>>>
+  // ========================================
+  this.showModalFunction = () => {
+    this.showModal = !this.showModal;
+  }
+  // ========================================
   // <<<<<<<<<<<CHECK LOGIN FUNCTION>>>>>>>>>
   // ========================================
   this.checkLogIn = () => {
@@ -233,7 +239,8 @@ app.controller('MainController', ['$http', function($http){
         abilities: this.pokemonAblilites,
         stats: this.pokemonStats,
         ownerId: this.loggedInUser._id,
-        combinedStats: 0
+        combinedStats: 0,
+        captureRate: 0
       }
     }).then(function(res){
       let statVariable = 0;
@@ -241,24 +248,48 @@ app.controller('MainController', ['$http', function($http){
         statVariable+=res.data.stats[i].base_stat
       };
       res.data.combinedStats = statVariable;
-      let lowPercentChance = .25
+      let lowPercent = .15;
+      let mediumPercent = .30;
+      let highPercent = .45;
       let randomMath = parseFloat(Math.random()*1).toFixed(2);
-      console.log(lowPercentChance);
-      console.log(randomMath);
-      console.log(res.data.combinedStats);
-      console.log(statVariable);
-      console.log(res.data.stats[0].base_stat  );
-      if( randomMath < lowPercentChance){
-        if(controller.loggedInUser.pokeBalls > 0){
+
+      if(res.data.combinedStats < 350){
+        res.data.captureRate = highPercent;
+        console.log(res.data.captureRate);
+        if( randomMath < highPercent){
+          if(controller.loggedInUser.pokeBalls > 0){
+            controller.spendPokeballs(controller.loggedInUser);
+            controller.getCollections();
+          };
+        }else {
+          controller.deleteCollection(res.data);
           controller.spendPokeballs(controller.loggedInUser);
-          controller.getCollections();
+          controller.showModalFunction();
         };
-      }else {
-        controller.deleteCollection(res.data);
-        controller.spendPokeballs(controller.loggedInUser);
-        alert('Try Again');
-        controller.getCollections();
+      } else if (res.data.combinedStats >= 350 && res.data.combinedStats < 450){
+        if( randomMath < mediumPercent){
+          if(controller.loggedInUser.pokeBalls > 0){
+            controller.spendPokeballs(controller.loggedInUser);
+            controller.getCollections();
+          };
+        }else {
+          controller.deleteCollection(res.data);
+          controller.spendPokeballs(controller.loggedInUser);
+          controller.showModalFunction();
+        };
+      } else if (res.data.combinedStats >= 450){
+        if( randomMath < lowPercent){
+          if(controller.loggedInUser.pokeBalls > 0){
+            controller.spendPokeballs(controller.loggedInUser);
+            controller.getCollections();
+          };
+        }else {
+          controller.deleteCollection(res.data);
+          controller.spendPokeballs(controller.loggedInUser);
+          controller.showModalFunction();
+        };
       }
+
     },function(error){
       console.log(error);
     });
