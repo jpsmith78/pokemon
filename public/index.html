@@ -87,7 +87,7 @@
       <<<<VIEW SELECTED LIST ITEM>>>>>
       =========================== -->
 
-      <form class="card" ng-submit="ctrl.createCollection()" ng-if="ctrl.pokemonName !== ''">
+      <form class="card" ng-submit="ctrl.catchPokemon()" ng-if="ctrl.pokemonName !== ''">
         <h1>{{ctrl.pokemonName}}</h1>
         <img class="image" src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
         <div class="info">
@@ -163,7 +163,7 @@
         {{user.pokeBalls}}</h3>
         <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
             <h4>{{collection.name}}</h4>
-            <img src="{{collection.image}}" alt="{{collection.name}}">
+            <img src="{{collection.image}}" alt="{{collection.name}}"/>
         </div>
 
       </div>

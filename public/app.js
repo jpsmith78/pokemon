@@ -5,8 +5,8 @@ const app = angular.module('MyApp', []);
 app.controller('MainController', ['$http', function($http){
   const controller = this;
   this.pokemonList = [];
-  this.pokemon = ''
   this.pokemonSprites = '';
+  this.pokemonId = '';
   this.pokemonName = '';
   this.pokemonResult = '';
   this.pokemonStats = [];
@@ -85,7 +85,7 @@ app.controller('MainController', ['$http', function($http){
       data:{
         username: this.username,
         password: this.password,
-        pokeBalls: this.initialNumber
+        pokeBalls: 10
       }
     }).then(function(res){
       console.log(res.data);
@@ -106,7 +106,6 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
       controller.users = res.data;
       console.log(controller.users);
-
     },function(error){
       console.log(error);
     })
@@ -149,6 +148,35 @@ app.controller('MainController', ['$http', function($http){
         console.log(res.data);
     });
   };
+  // ========================================
+  // <<<<<<<ADD POKEMON TO USER COLLECTION>>>>>>>>>
+  // ========================================
+  this.addPokemonToUserCollection = (user) => {
+    let newPokemon = {}
+    $http({
+      method: 'PUT',
+      url: '/users/' + user._id,
+      data: {
+        userCollection: user.userCollection
+    }
+    }).then(function(res){
+
+      newPokemon = { id: controller.pokemonId, name: controller.pokemonName, speed: controller.pokemonStats[0].base_stat, specialDefense: controller.pokemonStats[1].base_stat, specialAttack: controller.pokemonStats[2].base_stat, defense: controller.pokemonStats[3].base_stat, attack: controller.pokemonStats[4].base_stat, hp: controller.pokemonStats[5].base_stat}
+
+
+
+      user.userCollection.push(newPokemon)
+      res.data.userCollection = user.userCollection
+      console.log(controller.pokemonName);
+      console.log(res.data.userCollection);
+      console.log(user.userCollection);
+      console.log(newPokemon);
+      console.log(controller.pokemonId);
+
+      controller.getUsers();
+    })
+  }
+
 
   // ========================================
   // <<<<<<<SPEND POKEBALL FUNCTION>>>>>>>>>
@@ -180,9 +208,10 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       if(user.pokeBalls < 10){
-            user.pokeBalls++;
-            res.data.pokeBalls++;
+          user.pokeBalls++;
+          res.data.pokeBalls++;
       };
+
     });
   };
 
@@ -226,9 +255,9 @@ app.controller('MainController', ['$http', function($http){
   };
 
   // ========================================
-  // <<<<<<CREATE COLLECTION FUNCTION>>>>>>>>>
+  // <<<<<<CATCH POKEMON FUNCTION>>>>>>>>>
   // ========================================
-  this.createCollection = () => {
+  this.catchPokemon = () => {
     $http({
       method: 'POST',
       url: '/collections',
@@ -238,35 +267,33 @@ app.controller('MainController', ['$http', function($http){
         types: this.pokemonTypes,
         abilities: this.pokemonAblilites,
         stats: this.pokemonStats,
-        ownerId: this.loggedInUser._id,
-        combinedStats: 0,
-        captureRate: 0
+        ownerId: this.loggedInUser._id
       }
     }).then(function(res){
+      controller.pokemonId = res.data._id;
       let statVariable = 0;
       for(let i = 0; i < res.data.stats.length; i++){
         statVariable+=res.data.stats[i].base_stat
       };
-      res.data.combinedStats = statVariable;
       let lowPercent = .15;
       let mediumPercent = .30;
       let highPercent = .45;
       let randomMath = parseFloat(Math.random()*1).toFixed(2);
 
-      if(res.data.combinedStats < 350){
-        res.data.captureRate = highPercent;
-        console.log(res.data.captureRate);
+      if(statVariable < 350){
+
         if( randomMath < highPercent){
           if(controller.loggedInUser.pokeBalls > 0){
             controller.spendPokeballs(controller.loggedInUser);
             controller.getCollections();
+            controller.addPokemonToUserCollection(controller.loggedInUser)
           };
         }else {
           controller.deleteCollection(res.data);
           controller.spendPokeballs(controller.loggedInUser);
           controller.showModalFunction();
         };
-      } else if (res.data.combinedStats >= 350 && res.data.combinedStats < 450){
+      } else if (statVariable >= 350 && statVariable < 450){
         if( randomMath < mediumPercent){
           if(controller.loggedInUser.pokeBalls > 0){
             controller.spendPokeballs(controller.loggedInUser);
@@ -277,7 +304,7 @@ app.controller('MainController', ['$http', function($http){
           controller.spendPokeballs(controller.loggedInUser);
           controller.showModalFunction();
         };
-      } else if (res.data.combinedStats >= 450){
+      } else if (statVariable >= 450){
         if( randomMath < lowPercent){
           if(controller.loggedInUser.pokeBalls > 0){
             controller.spendPokeballs(controller.loggedInUser);
@@ -289,7 +316,6 @@ app.controller('MainController', ['$http', function($http){
           controller.showModalFunction();
         };
       }
-
     },function(error){
       console.log(error);
     });
@@ -310,6 +336,7 @@ app.controller('MainController', ['$http', function($http){
       console.log(error);
     });
   };
+
 
 
   // ========================================

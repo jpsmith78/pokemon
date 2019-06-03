@@ -20,8 +20,6 @@ const collectionSchema = Schema({
     }
   },
   ownerId: String,
-  combinedStats: Number,
-  captureRate: Number
 });
 
 const Collection = mongoose.model('Collection', collectionSchema);
