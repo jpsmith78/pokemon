@@ -5,12 +5,7 @@ const userSchema = Schema({
   username: {type:String, unique:true, required:true},
   password: {type:String, required:true},
   pokeBalls: {type:Number},
-  userCollection: {type: Array,
-    items: {
-      type: String
-    }
-  }
-
+  
 });
 
 const User = mongoose.model('User', userSchema);

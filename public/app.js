@@ -9,6 +9,8 @@ app.controller('MainController', ['$http', function($http){
   this.pokemonId = '';
   this.pokemonName = '';
   this.pokemonResult = '';
+  this.selectedOpponentName = '';
+  this.selectedOpponentId = '';
   this.pokemonStats = [];
   this.pokemonTypes = [];
   this.pokemonAblilites = [];
@@ -89,6 +91,8 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       console.log(res.data);
+      controller.username = '';
+      controller.password = '';
       controller.showCreateForm = false;
     },function(error){
       console.log(error);
@@ -105,7 +109,7 @@ app.controller('MainController', ['$http', function($http){
       url: '/users'
     }).then(function(res){
       controller.users = res.data;
-      console.log(controller.users);
+      // console.log(controller.users);
     },function(error){
       console.log(error);
     })
@@ -124,11 +128,10 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       controller.loggedIn = true;
+      controller.username = '';
+      controller.password = '';
       controller.checkLogIn();
-      // controller.getUsers();
       console.log(res.data);
-
-      console.log(controller.users);
     },function(error){
       console.log(error);
     });
@@ -146,46 +149,12 @@ app.controller('MainController', ['$http', function($http){
         controller.loggedIn = false;
         controller.loggedInUser = '';
         controller.checkLogIn();
-        // controller.getUsers();
         console.log(res.data);
-        console.log(controller.users);
     },function(error){
       console.log(error);
     });
   };
-  // ========================================
-  // <<<<<<<ADD POKEMON TO USER COLLECTION>>>>>>>>>
-  // ========================================
-  this.addPokemonToUserCollection = (user) => {
-    let newPokemon = {}
-    $http({
-      method: 'PUT',
-      url: '/users/' + user._id,
-      data: {
-        userCollection: user.userCollection
-    }
-    }).then(function(res){
 
-      newPokemon = { id: controller.pokemonId, name: controller.pokemonName, speed: controller.pokemonStats[0].base_stat, specialDefense: controller.pokemonStats[1].base_stat, specialAttack: controller.pokemonStats[2].base_stat, defense: controller.pokemonStats[3].base_stat, attack: controller.pokemonStats[4].base_stat, hp: controller.pokemonStats[5].base_stat}
-
-      user.userCollection.push(newPokemon)
-      res.data.userCollection = user.userCollection
-
-      console.log(controller.pokemonId);
-    })
-  }
-  // ========================================
-  // <<<<REMOVE POKEMON FROM USER COLLECTION>>>>>
-  // ========================================
-  this.removePokemonFromUserCollection = () => {
-    $http({
-      method: 'PUT',
-      url: '/users/' + user._id,
-      data: {
-        userCollection: user.userCollection
-      }
-    })
-  }
   // ========================================
   // <<<<<<<SPEND POKEBALL FUNCTION>>>>>>>>>
   // ========================================
@@ -206,7 +175,8 @@ app.controller('MainController', ['$http', function($http){
             controller.users[i].pokeBalls = res.data.pokeBalls;
           }
         }
-        controller.checkLogIn()
+        controller.getCollections();
+        controller.checkLogIn();
 
       };
     });
@@ -268,16 +238,18 @@ app.controller('MainController', ['$http', function($http){
       url: '/checkLogIn'
     }).then(function(res){
         if(res.data.currentUser){
-          console.log(res.data.currentUser.pokeBalls);
+          // console.log(res.data.currentUser.pokeBalls);
           for (let i = 0; i < controller.users.length; i++) {
             if (res.data.currentUser._id === controller.users[i]._id) {
               res.data.currentUser.pokeBalls = controller.users[i].pokeBalls;
-              console.log(res.data.currentUser.pokeBalls);
-              console.log(controller.users[i].pokeBalls);
+              // console.log(res.data.currentUser.pokeBalls);
+              // console.log(controller.users[i].pokeBalls);
             }
           }
-          console.log(controller.users);
+          // console.log(controller.users);
           controller.loggedInUser = res.data.currentUser;
+          controller.comparePokemon()
+
         }else{
           controller.loggedInUser = '';
         }
@@ -318,7 +290,6 @@ app.controller('MainController', ['$http', function($http){
           if(controller.loggedInUser.pokeBalls > 0){
             controller.spendPokeballs(controller.loggedInUser);
             controller.checkLogIn();
-            controller.addPokemonToUserCollection(controller.loggedInUser)
           };
         }else {
           controller.deleteCollection(res.data);
@@ -364,7 +335,7 @@ app.controller('MainController', ['$http', function($http){
       url: '/collections'
     }).then(function(res){
       controller.collections = res.data;
-      console.log(controller.collections);
+      // console.log(controller.collections);
     },function(error){
       console.log(error);
     });
@@ -387,6 +358,39 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+  // ========================================
+  // <<<<<<SELECT OPPONENT FUNCTION>>>>>>>>>
+  // ========================================
+  this.selectOpponent = ($event) => {
+    console.log($event.target.innerHTML);
+    controller.selectedOpponentName = $event.target.innerHTML;
+    console.log(controller.selectedOpponentName);
+    for (let h = 0; h < controller.users.length; h++) {
+      if (controller.users[h].username === controller.selectedOpponentName) {
+        controller.selectedOpponentId = controller.users[h]._id
+        console.log(controller.selectedOpponentId);
+        controller.comparePokemon();
+      }
+    }
+  }
+  // ========================================
+  // <<<<<<COMPARE POKEMON FUNCTION>>>>>>>>>
+  // ========================================
+  this.comparePokemon = () => {
+    console.log(controller.loggedInUser);
+    console.log(controller.users);
+    console.log(controller.collections);
+
+    for (let i = 0; i < controller.collections.length; i++) {
+      if (controller.collections[i].ownerId === controller.loggedInUser._id) {
+        console.log(controller.collections[i].name);
+      }
+      if (controller.collections[i].ownerId === controller.selectedOpponentId){
+        console.log('opponent: ' + controller.collections[i].name);
+      }
+    }
+
+  }
   // let myInt = setInterval(function(){
   //   for(let i = 0; i < controller.users.length; i++){
   //     controller.recoverPokeballs(controller.users[i]);

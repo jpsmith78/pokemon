@@ -158,7 +158,7 @@
       =========================== -->
 
       <div class="userNames" ng-repeat="user in ctrl.users" >
-        <h3 >{{user.username}}</h3>
+        <h3 ng-click="ctrl.selectOpponent($event)">{{user.username}}</h3>
         <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
         {{user.pokeBalls}}</h3>
         <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
