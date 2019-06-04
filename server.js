@@ -32,9 +32,7 @@ app.use(session({
 // <<<<<<<<<<ALL ROUTES >>>>>>>>>>>>>>>>>
 // ======================================
 
-app.get('/checkLogIn', (req,res) => {
-      res.json(req.session);
-});
+
 
 
 const sessionsController = require('./controllers/sessions.js');
@@ -46,6 +44,9 @@ app.use('/users', usersController);
 const collectionsController = require('./controllers/collections.js');
 app.use('/collections', collectionsController);
 
+app.get('/checkLogIn', (req,res) => {
+      res.json(req.session);
+});
 // ======================================
 // <<<<<<<<<LISTENING >>>>>>>>>>>>>>>>>
 // ======================================

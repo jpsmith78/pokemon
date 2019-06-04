@@ -125,8 +125,10 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
       controller.loggedIn = true;
       controller.checkLogIn();
+      // controller.getUsers();
       console.log(res.data);
 
+      console.log(controller.users);
     },function(error){
       console.log(error);
     });
@@ -143,9 +145,12 @@ app.controller('MainController', ['$http', function($http){
     }).then(function(res){
         controller.loggedIn = false;
         controller.loggedInUser = '';
-        controller.getCollections();
-        controller.getUsers();
+        controller.checkLogIn();
+        // controller.getUsers();
         console.log(res.data);
+        console.log(controller.users);
+    },function(error){
+      console.log(error);
     });
   };
   // ========================================
@@ -163,21 +168,24 @@ app.controller('MainController', ['$http', function($http){
 
       newPokemon = { id: controller.pokemonId, name: controller.pokemonName, speed: controller.pokemonStats[0].base_stat, specialDefense: controller.pokemonStats[1].base_stat, specialAttack: controller.pokemonStats[2].base_stat, defense: controller.pokemonStats[3].base_stat, attack: controller.pokemonStats[4].base_stat, hp: controller.pokemonStats[5].base_stat}
 
-
-
       user.userCollection.push(newPokemon)
       res.data.userCollection = user.userCollection
-      console.log(controller.pokemonName);
-      console.log(res.data.userCollection);
-      console.log(user.userCollection);
-      console.log(newPokemon);
-      console.log(controller.pokemonId);
 
-      controller.getUsers();
+      console.log(controller.pokemonId);
     })
   }
-
-
+  // ========================================
+  // <<<<REMOVE POKEMON FROM USER COLLECTION>>>>>
+  // ========================================
+  this.removePokemonFromUserCollection = () => {
+    $http({
+      method: 'PUT',
+      url: '/users/' + user._id,
+      data: {
+        userCollection: user.userCollection
+      }
+    })
+  }
   // ========================================
   // <<<<<<<SPEND POKEBALL FUNCTION>>>>>>>>>
   // ========================================
@@ -192,6 +200,14 @@ app.controller('MainController', ['$http', function($http){
       if(user.pokeBalls > 0){
         user.pokeBalls--;
         res.data.pokeBalls--;
+
+        for (let i = 0; i < controller.users.length; i++) {
+          if(controller.users[i]._id === user._id){
+            controller.users[i].pokeBalls = res.data.pokeBalls;
+          }
+        }
+        controller.checkLogIn()
+
       };
     });
   };
@@ -208,10 +224,17 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       if(user.pokeBalls < 10){
+
           user.pokeBalls++;
           res.data.pokeBalls++;
-      };
 
+          for (let i = 0; i < controller.users.length; i++) {
+            if(controller.users[i]._id === user._id){
+              controller.users[i].pokeBalls = res.data.pokeBalls;
+            }
+          }
+          controller.checkLogIn()
+      };
     });
   };
 
@@ -245,6 +268,15 @@ app.controller('MainController', ['$http', function($http){
       url: '/checkLogIn'
     }).then(function(res){
         if(res.data.currentUser){
+          console.log(res.data.currentUser.pokeBalls);
+          for (let i = 0; i < controller.users.length; i++) {
+            if (res.data.currentUser._id === controller.users[i]._id) {
+              res.data.currentUser.pokeBalls = controller.users[i].pokeBalls;
+              console.log(res.data.currentUser.pokeBalls);
+              console.log(controller.users[i].pokeBalls);
+            }
+          }
+          console.log(controller.users);
           controller.loggedInUser = res.data.currentUser;
         }else{
           controller.loggedInUser = '';
@@ -285,12 +317,13 @@ app.controller('MainController', ['$http', function($http){
         if( randomMath < highPercent){
           if(controller.loggedInUser.pokeBalls > 0){
             controller.spendPokeballs(controller.loggedInUser);
-            controller.getCollections();
+            controller.checkLogIn();
             controller.addPokemonToUserCollection(controller.loggedInUser)
           };
         }else {
           controller.deleteCollection(res.data);
           controller.spendPokeballs(controller.loggedInUser);
+          controller.checkLogIn()
           controller.showModalFunction();
         };
       } else if (statVariable >= 350 && statVariable < 450){
@@ -359,10 +392,12 @@ app.controller('MainController', ['$http', function($http){
   //     controller.recoverPokeballs(controller.users[i]);
   //   }
   // }, 10000);
-  this.checkLogIn();
-  this.getUsers();
   this.getPokemon();
   this.getCollections();
   this.logOut();
+  this.checkLogIn();
+  this.getUsers();
+
+
 //end MainController
 }]);

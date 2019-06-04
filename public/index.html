@@ -113,7 +113,7 @@
           <!-- ======================
           <<<<<BUY SELECTED ITEM>>>>>
           =========================== -->
-          <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls">Buy</button>
+          <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls">Catch Pokemon</button>
         </form>
 
       </div>
@@ -157,7 +157,7 @@
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
 
-      <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id ">
+      <div class="userNames" ng-repeat="user in ctrl.users" >
         <h3 >{{user.username}}</h3>
         <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
         {{user.pokeBalls}}</h3>
