@@ -21,6 +21,8 @@ app.controller('MainController', ['$http', function($http){
   this.showCreateForm = false;
   this.showLogInForm = false;
   this.showModal = false;
+  this.showWinModal = false;
+  this.showLoseModal = false;
   this.initialNumber = 10;
 
   // ========================================
@@ -87,7 +89,9 @@ app.controller('MainController', ['$http', function($http){
       data:{
         username: this.username,
         password: this.password,
-        pokeBalls: 10
+        pokeBalls: 10,
+        wins: 0,
+        losses: 0
       }
     }).then(function(res){
       console.log(res.data);
@@ -100,20 +104,7 @@ app.controller('MainController', ['$http', function($http){
   };
 
 
-  // ========================================
-  // <<<<<<GET USERS FUNCTION>>>>>>>>>
-  // ========================================
-  this.getUsers = () => {
-    $http({
-      method: 'GET',
-      url: '/users'
-    }).then(function(res){
-      controller.users = res.data;
-      // console.log(controller.users);
-    },function(error){
-      console.log(error);
-    })
-  }
+
 
   // ========================================
   // <<<<<<<<<<<USER LOGIN FUNCTION>>>>>>>>>
@@ -207,8 +198,40 @@ app.controller('MainController', ['$http', function($http){
       };
     });
   };
+  // ========================================
+  // <<<<<<<INCREMENT USER WINS FUNCTION>>>>>>>>>
+  // ========================================
+  this.incrementUserWIns = (user) => {
+    $http({
+      method: 'PUT',
+      url: '/users/' + user._id,
+      data: {
+        wins: user.wins++
+      }
+    }).then(function(res){
+      console.log(res.data.wins);
+    })
+  }
+  // ========================================
+  // <<<<<<<INCREMENT USER LOSSES FUNCTION>>>>>>>>>
+  // ========================================
 
 
+
+  // ========================================
+  // <<<<<<GET USERS FUNCTION>>>>>>>>>
+  // ========================================
+  this.getUsers = () => {
+    $http({
+      method: 'GET',
+      url: '/users'
+    }).then(function(res){
+      controller.users = res.data;
+      // console.log(controller.users);
+    },function(error){
+      console.log(error);
+    })
+  }
   // ========================================
   // <<<<<<<SHOW CREATE USER FUNCTION>>>>>>>>>
   // ========================================
@@ -228,7 +251,22 @@ app.controller('MainController', ['$http', function($http){
   // ========================================
   this.showModalFunction = () => {
     this.showModal = !this.showModal;
-  }
+  };
+
+  // ========================================
+  // <<<<<<<<<<<SHOW WIN MODAL FUNCTION>>>>>>>>>
+  // ========================================
+  this.showWinModalFunction = () => {
+    this.showWinModal = !this.showWinModal;
+  };
+
+  // ========================================
+  // <<<<<<<<<<<SHOW LOSE MODAL FUNCTION>>>>>>>>>
+  // ========================================
+  this.showLoseModalFunction = () => {
+    this.showLoseModal = !this.showLoseModal;
+  };
+
   // ========================================
   // <<<<<<<<<<<CHECK LOGIN FUNCTION>>>>>>>>>
   // ========================================
@@ -248,8 +286,6 @@ app.controller('MainController', ['$http', function($http){
           }
           // console.log(controller.users);
           controller.loggedInUser = res.data.currentUser;
-          controller.comparePokemon()
-
         }else{
           controller.loggedInUser = '';
         }
@@ -362,13 +398,10 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<SELECT OPPONENT FUNCTION>>>>>>>>>
   // ========================================
   this.selectOpponent = ($event) => {
-    console.log($event.target.innerHTML);
     controller.selectedOpponentName = $event.target.innerHTML;
-    console.log(controller.selectedOpponentName);
     for (let h = 0; h < controller.users.length; h++) {
       if (controller.users[h].username === controller.selectedOpponentName) {
         controller.selectedOpponentId = controller.users[h]._id
-        console.log(controller.selectedOpponentId);
         controller.comparePokemon();
       }
     }
@@ -377,19 +410,29 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<COMPARE POKEMON FUNCTION>>>>>>>>>
   // ========================================
   this.comparePokemon = () => {
-    console.log(controller.loggedInUser);
-    console.log(controller.users);
-    console.log(controller.collections);
+
+    let ownerPokemon = [];
+    let opponentPokemon = [];
 
     for (let i = 0; i < controller.collections.length; i++) {
       if (controller.collections[i].ownerId === controller.loggedInUser._id) {
-        console.log(controller.collections[i].name);
+        ownerPokemon.push(controller.collections[i]);
       }
+
       if (controller.collections[i].ownerId === controller.selectedOpponentId){
-        console.log('opponent: ' + controller.collections[i].name);
+        opponentPokemon.push(controller.collections[i])
       }
     }
 
+    let ownerRandomizer = Math.floor(Math.random() * ownerPokemon.length)
+    let opponentRandomizer = Math.floor(Math.random() * opponentPokemon.length)
+
+    if(ownerPokemon[ownerRandomizer].stats[4].base_stat > opponentPokemon[opponentRandomizer].stats[3].base_stat){
+      controller.showWinModalFunction();
+      controller.incrementUserWIns(controller.loggedInUser)
+    }else{
+      controller.showLoseModalFunction();
+    }
   }
   // let myInt = setInterval(function(){
   //   for(let i = 0; i < controller.users.length; i++){

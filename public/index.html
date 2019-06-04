@@ -50,7 +50,7 @@
 
     <div class="main">
       <!-- ======================
-      <<<<<<MODAL>>>>>
+      <<<<<<MODALS>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.showModal">
         <div class="modal" >
@@ -59,6 +59,19 @@
         </div>
       </div>
 
+      <div class="modal-background" ng-if="ctrl.showWinModal">
+        <div class="modal" >
+          <h3>{{ctrl.loggedInUser.username}} wins</h3>
+            <button ng-click="ctrl.showWinModalFunction()">OK</button>
+        </div>
+      </div>
+
+      <div class="modal-background" ng-if="ctrl.showLoseModal">
+        <div class="modal" >
+          <h3>{{ctrl.loggedInUser.username}} loses</h3>
+            <button ng-click="ctrl.showLoseModalFunction()">OK</button>
+        </div>
+      </div>
 
       <!-- ======================
       <<<<<<POKEMON LIST>>>>>
@@ -124,6 +137,8 @@
 
       <div class="myCards">
         <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
+        <h2 ng-if="ctrl.loggedInUser">Wins: {{ctrl.loggedInUser.wins}}</h2>
+        <h2 ng-if="ctrl.loggedInUser">Losses: {{ctrl.loggedInUser.losses}}</h2>
         <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokemon</h2>
         <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUser._id === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>
@@ -157,15 +172,14 @@
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
 
-      <div class="userNames" ng-repeat="user in ctrl.users" >
-        <h3 ng-click="ctrl.selectOpponent($event)">{{user.username}}</h3>
-        <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
-        {{user.pokeBalls}}</h3>
-        <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
-            <h4>{{collection.name}}</h4>
-            <img src="{{collection.image}}" alt="{{collection.name}}"/>
-        </div>
-
+      <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id">
+          <h3 ng-click="ctrl.selectOpponent($event)">{{user.username}}</h3>
+          <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
+          {{user.pokeBalls}}</h3>
+          <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
+              <h4>{{collection.name}}</h4>
+              <img src="{{collection.image}}" alt="{{collection.name}}"/>
+            </div>
       </div>
 
 
