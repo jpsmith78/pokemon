@@ -61,14 +61,20 @@
 
       <div class="modal-background" ng-if="ctrl.showWinModal">
         <div class="modal" >
-          <h3>{{ctrl.loggedInUser.username}} wins</h3>
+          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
+          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
+          </h3>
+          <h3>{{ctrl.loggedInUser.username}} wins!</h3>
             <button ng-click="ctrl.showWinModalFunction()">OK</button>
         </div>
       </div>
 
       <div class="modal-background" ng-if="ctrl.showLoseModal">
         <div class="modal" >
-          <h3>{{ctrl.loggedInUser.username}} loses</h3>
+          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
+          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
+          </h3>
+          <h3>{{ctrl.selectedOpponentName}} wins!</h3>
             <button ng-click="ctrl.showLoseModalFunction()">OK</button>
         </div>
       </div>

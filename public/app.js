@@ -4,19 +4,20 @@ const app = angular.module('MyApp', []);
 
 app.controller('MainController', ['$http', function($http){
   const controller = this;
+
   this.pokemonList = [];
   this.pokemonSprites = '';
   this.pokemonId = '';
   this.pokemonName = '';
   this.pokemonResult = '';
-  this.selectedOpponentName = '';
-  this.selectedOpponentId = '';
   this.pokemonStats = [];
   this.pokemonTypes = [];
   this.pokemonAblilites = [];
+
   this.myCards = [];
   this.pokemonURL = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=897";
   this.baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+
   this.loggedIn = false;
   this.showCreateForm = false;
   this.showLogInForm = false;
@@ -24,6 +25,11 @@ app.controller('MainController', ['$http', function($http){
   this.showWinModal = false;
   this.showLoseModal = false;
   this.initialNumber = 10;
+
+  this.selectedOpponentName = '';
+  this.selectedOpponentId = '';
+  this.userPokemon = '';
+  this.enemyPokemon = '';
 
   // ========================================
   // <<<<<<<<SHOW SELECTED POKEMON INFO>>>>>>
@@ -394,6 +400,7 @@ app.controller('MainController', ['$http', function($http){
     });
   };
 
+
   // ========================================
   // <<<<<<SELECT OPPONENT FUNCTION>>>>>>>>>
   // ========================================
@@ -423,11 +430,14 @@ app.controller('MainController', ['$http', function($http){
         opponentPokemon.push(controller.collections[i])
       }
     }
-
+    console.log(ownerPokemon.length);
     let ownerRandomizer = Math.floor(Math.random() * ownerPokemon.length)
     let opponentRandomizer = Math.floor(Math.random() * opponentPokemon.length)
 
-    if(ownerPokemon[ownerRandomizer].stats[4].base_stat > opponentPokemon[opponentRandomizer].stats[3].base_stat){
+    controller.userPokemon = ownerPokemon[ownerRandomizer];
+    controller.enemyPokemon = opponentPokemon[opponentRandomizer];
+
+    if(controller.userPokemon.stats[4].base_stat > controller.enemyPokemon.stats[3].base_stat){
       controller.showWinModalFunction();
       controller.incrementUserWIns(controller.loggedInUser)
     }else{
