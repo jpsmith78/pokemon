@@ -65,6 +65,7 @@
           <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
           </h3>
           <h3>{{ctrl.loggedInUser.username}} wins!</h3>
+          <h3>{{ctrl.loggedInUser.username}} has won a pokeball</h3>
             <button ng-click="ctrl.showWinModalFunction()">OK</button>
         </div>
       </div>
@@ -75,6 +76,7 @@
           <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
           </h3>
           <h3>{{ctrl.selectedOpponentName}} wins!</h3>
+          <h3>{{ctrl.loggedInUser.username}} has lost a pokeball</h3>
             <button ng-click="ctrl.showLoseModalFunction()">OK</button>
         </div>
       </div>
@@ -177,9 +179,13 @@
       <!-- ======================
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
-
+      <div class="instructions">
+        <h3 ng-if="ctrl.loggedIn">Click on opponent name to do battle</h3>
+      </div>
       <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id">
-          <h3 ng-click="ctrl.selectOpponent($event)">{{user.username}}</h3>
+          <button ng-click="ctrl.selectOpponent($event)">{{user.username}}</button>
+          <h3>Wins: {{user.wins}}</h3>
+          <h3>Losses: {{user.losses}}</h3>
           <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
           {{user.pokeBalls}}</h3>
           <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">

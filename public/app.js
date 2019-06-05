@@ -207,7 +207,7 @@ app.controller('MainController', ['$http', function($http){
   // ========================================
   // <<<<<<<INCREMENT USER WINS FUNCTION>>>>>>>>>
   // ========================================
-  this.incrementUserWIns = (user) => {
+  this.incrementUserWins = (user) => {
     $http({
       method: 'PUT',
       url: '/users/' + user._id,
@@ -221,7 +221,17 @@ app.controller('MainController', ['$http', function($http){
   // ========================================
   // <<<<<<<INCREMENT USER LOSSES FUNCTION>>>>>>>>>
   // ========================================
-
+  this.incrementUserLosses = (user) => {
+    $http({
+      method: 'PUT',
+      url: '/users/' + user._id,
+      data: {
+        losses: user.losses++
+      }
+    }).then(function(res){
+      console.log(res.data.losses);
+    })
+  }
 
 
   // ========================================
@@ -405,13 +415,16 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<SELECT OPPONENT FUNCTION>>>>>>>>>
   // ========================================
   this.selectOpponent = ($event) => {
-    controller.selectedOpponentName = $event.target.innerHTML;
-    for (let h = 0; h < controller.users.length; h++) {
-      if (controller.users[h].username === controller.selectedOpponentName) {
-        controller.selectedOpponentId = controller.users[h]._id
-        controller.comparePokemon();
+    if(controller.loggedInUser && controller.loggedInUser.pokeBalls > 0 && controller.loggedInUser.pokeBalls < 10){
+      controller.selectedOpponentName = $event.target.innerHTML;
+      for (let h = 0; h < controller.users.length; h++) {
+        if (controller.users[h].username === controller.selectedOpponentName) {
+          controller.selectedOpponentId = controller.users[h]._id
+          controller.comparePokemon();
+        }
       }
     }
+
   }
   // ========================================
   // <<<<<<COMPARE POKEMON FUNCTION>>>>>>>>>
@@ -420,29 +433,32 @@ app.controller('MainController', ['$http', function($http){
 
     let ownerPokemon = [];
     let opponentPokemon = [];
+      for (let i = 0; i < controller.collections.length; i++) {
+        if (controller.collections[i].ownerId === controller.loggedInUser._id) {
+          ownerPokemon.push(controller.collections[i]);
+        }
 
-    for (let i = 0; i < controller.collections.length; i++) {
-      if (controller.collections[i].ownerId === controller.loggedInUser._id) {
-        ownerPokemon.push(controller.collections[i]);
+        if (controller.collections[i].ownerId === controller.selectedOpponentId){
+          opponentPokemon.push(controller.collections[i]);
+        }
+      }
+      let ownerRandomizer = Math.floor(Math.random() * ownerPokemon.length);
+      let opponentRandomizer = Math.floor(Math.random() * opponentPokemon.length);
+      let recoverRandomizer = Math.floor(Math.random() * 3);
+
+      controller.userPokemon = ownerPokemon[ownerRandomizer];
+      controller.enemyPokemon = opponentPokemon[opponentRandomizer];
+
+      if(controller.userPokemon.stats[4].base_stat > controller.enemyPokemon.stats[3].base_stat){
+        controller.showWinModalFunction();
+        controller.incrementUserWins(controller.loggedInUser);
+        controller.recoverPokeballs(controller.loggedInUser);
+      }else{
+        controller.showLoseModalFunction();
+        controller.incrementUserLosses(controller.loggedInUser);
+        controller.spendPokeballs(controller.loggedInUser)
       }
 
-      if (controller.collections[i].ownerId === controller.selectedOpponentId){
-        opponentPokemon.push(controller.collections[i])
-      }
-    }
-    console.log(ownerPokemon.length);
-    let ownerRandomizer = Math.floor(Math.random() * ownerPokemon.length)
-    let opponentRandomizer = Math.floor(Math.random() * opponentPokemon.length)
-
-    controller.userPokemon = ownerPokemon[ownerRandomizer];
-    controller.enemyPokemon = opponentPokemon[opponentRandomizer];
-
-    if(controller.userPokemon.stats[4].base_stat > controller.enemyPokemon.stats[3].base_stat){
-      controller.showWinModalFunction();
-      controller.incrementUserWIns(controller.loggedInUser)
-    }else{
-      controller.showLoseModalFunction();
-    }
   }
   // let myInt = setInterval(function(){
   //   for(let i = 0; i < controller.users.length; i++){
