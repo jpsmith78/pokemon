@@ -4,6 +4,8 @@
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js" charset="utf-8"></script>
      <script src="app.js" type="text/javascript"></script>
      <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
+
      <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <title></title>
@@ -16,7 +18,7 @@
       <h2 ng-if="ctrl.loggedInUser">Welcome {{ctrl.loggedInUser.username}}</h2>
 
       <nav>
-        <div class="nav-form">
+        <div class="nav-form register">
           <!-- ======================
           <<<<<<CREATE USER FORM>>>>>
           =========================== -->
@@ -30,10 +32,12 @@
           </form>
         </div>
 
+        <button class="logout" type="submit" ng-if="ctrl.loggedIn" ng-click="ctrl.logOut()">Log Out</button>
+
+        <!-- ======================
+        <<<<<<LOG IN USER FORM>>>>>
+        =========================== -->
         <div class="nav-form">
-          <!-- ======================
-          <<<<<<LOG IN USER FORM>>>>>
-          =========================== -->
 
           <button ng-if="!ctrl.showLogInForm" ng-click="ctrl.showLogInUsersForm()">Log In</button>
           <button ng-if="ctrl.showLogInForm && !ctrl.loggedIn" ng-click="ctrl.showLogInUsersForm()">Hide Log In</button>
@@ -46,7 +50,6 @@
         </div>
 
       </nav>
-      <button class="logout" type="submit" ng-if="ctrl.loggedIn" ng-click="ctrl.logOut()">Log Out</button>
     </header>
 
     <div class="main">
@@ -89,11 +92,11 @@
             <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
           </div>
           <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
-          <img src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
           <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
           </h3>
-          <h3>{{ctrl.loggedInUser.username}} wins!</h3>
-          <h3>{{ctrl.loggedInUser.username}} has won a pokeball</h3>
+          <h3>the winner is {{ctrl.loggedInUser.username}}!</h3>
+          <img src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
+          <h3>{{ctrl.loggedInUser.username}} has won a pokeball!</h3>
             <button ng-click="ctrl.showWinModalFunction()">OK</button>
         </div>
       </div>
@@ -111,8 +114,9 @@
           <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
           <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
           </h3>
-          <h3>{{ctrl.selectedOpponentName}} wins!</h3>
-          <h3>{{ctrl.loggedInUser.username}} has lost a pokeball</h3>
+          <h3>The winner is {{ctrl.selectedOpponentName}}!</h3>
+          <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
+          <h3>{{ctrl.loggedInUser.username}} has lost a pokeball!</h3>
             <button ng-click="ctrl.showLoseModalFunction()">OK</button>
         </div>
       </div>
@@ -140,25 +144,22 @@
       <<<<<<POKEMON LIST>>>>>
       =========================== -->
 
-      <div >
-        <h2>Pokemon List</h2>
+      <div class="deck_nav">
+        <h1>Pokemon List</h1>
         <ol class="deckList">
           <li ng-repeat="pokemon in ctrl.pokemonList" ng-click="ctrl.moveNameToInputField($event)" ng-bind="pokemon">{{pokemon.name}}</li>
         </ol>
-      </div>
+
 
       <!-- =======================
       <<<<<<SUBMIT LIST ITEM>>>>>
       =========================== -->
 
-      <form ng-submit="ctrl.findPokemon()">
-        <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
-        <button type="submit">Submit</button><br/>
-      </form>
-      <form ng-submit="ctrl.recoverPokeballs(ctrl.loggedInUser)">
-        <button type="submit">recover pokeballs</button>
-      </form>
-
+        <form ng-submit="ctrl.findPokemon()">
+          <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
+          <button type="submit">Submit</button><br/>
+        </form>
+      </div>
 
       <!-- ======================
       <<<<VIEW SELECTED LIST ITEM>>>>>
@@ -200,9 +201,11 @@
       =========================== -->
 
       <div class="myCards">
-        <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
-        <h2 ng-if="ctrl.loggedInUser">Wins: {{ctrl.loggedInUser.userWins}}</h2>
-        <h2 ng-if="ctrl.loggedInUser">Losses: {{ctrl.loggedInUser.userLosses}}</h2>
+        <div class="my_card_header">
+          <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
+          <h2 ng-if="ctrl.loggedInUser">Wins: {{ctrl.loggedInUser.userWins}}</h2>
+          <h2 ng-if="ctrl.loggedInUser">Losses: {{ctrl.loggedInUser.userLosses}}</h2>
+        </div>
         <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokemon</h2>
         <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUser._id === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>

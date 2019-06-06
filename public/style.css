@@ -6,9 +6,11 @@
   --gold_foil: #B3A125;
 }
 * {
-  border: 2px solid gold;
   text-align: center;
   text-transform: capitalize;
+}
+body {
+  font-family: 'Aldrich', sans-serif;
 }
 
 img {
@@ -16,22 +18,55 @@ img {
   border: 2px solid black;
   border-radius: 6px;
 }
-ol:hover{
-  cursor: pointer;
-}
-li {
+button {
+  width: 120px;
+  height: 50px;
   font-size: 16px;
   font-weight: 600;
+  margin: 10px;
+  box-shadow: 2px 2px 2px black;
+  border-radius: 5px;
+  background-color: var(--ceulean_blue);
+  font-family: 'Aldrich', sans-serif;
+  color: white;
 }
+ul {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0px;
+  list-style: none;
+  font-size: 14px;
+}
+li {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 5px;
+  border: 2px solid black;
+}
+ol:hover, button:hover {
+  cursor: pointer;
+}
+/* ==================================
+<<<<<<<<<HEADER>>>>>>>>>>>>>>>>>>
+================================== */
+
 header {
   padding: 20px;
   font-family: 'Press Start 2P', cursive;
   color: var(--ceulean_blue);
   background: var(--golden_yellow);
+  border-bottom: 2px solid var(--red);
 }
+
+/* ==================================
+<<<<<<<<<<<<NAV>>>>>>>>>>>>>>
+================================== */
 nav {
   display: flex;
   justify-content: center;
+  background: var(--gold_foil);
+  margin-top: 50px;
+  padding: 10px;
 }
 .nav-form {
   margin: 2% 15%;
@@ -39,6 +74,7 @@ nav {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
 }
 .nav-form > form {
   display: flex;
@@ -51,39 +87,76 @@ input {
   margin: 10px;
   font-size: 14px;
   text-align: center;
+  font-family: 'Aldrich', sans-serif;
+  border: 2px solid var(--ceulean_blue);
+  border-radius: 5px
 }
 .logout {
   margin: auto;
 }
+
+/* ==================================
+<<<<<<<<<<<MAIN>>>>>>>>>>>>>>>>
+================================== */
 .main {
   display: flex;
   flex-direction: column;
 }
-button {
-  width: 120px;
-  height: 50px;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 10px;
-  border: 2px solid black;
-  border-radius: 6px;
-  background-color: var(--ceulean_blue);
-  color: white;
+
+/* ==================================
+<<<<<<<<DECK LIST>>>>>>>>>
+================================== */
+.deck_nav {
+  background: var(--golden_yellow);
+  color: var(--ceulean_blue);
 }
-ul {
+.deckList {
   display: flex;
-  flex-direction: column;
-  padding-left: 0px;
-  list-style: none;
-  font-size: 14px;
+  flex-direction: row;
+  width: 90%;
+  height: 150px;
+  overflow-x: scroll;
+  margin: auto;
+  background: var(--ceulean_blue);
+  border: 2px solid var(--ceulean_blue);
 }
+.deckList > li {
+  min-width: 100px;
+  height: 80px;
+  margin: 20px;
+  background-color: var(--golden_yellow);
+  background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  color: var(--ceulean_blue);
+
+}
+/* ==================================
+<<<<<<<<<MY CARDS>>>>>>>>>>>>>
+================================== */
 .myCards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background: var(--golden_yellow);
 }
 .myCards > h2 {
   width: 100%;
+}
+.my_card_header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: var(--ceulean_blue);
+  border: 4px solid var(--red);
+  color: white;
+}
+.my_card_header > h2 {
+  margin: 2% 5%;
 }
 .card, .myCard {
   display: flex;
@@ -112,23 +185,7 @@ ul {
   margin: 0 auto;
   border: 2px solid black;
 }
-.deckList {
-  display: flex;
-  flex-direction: row;
-  width: 90%;
-  height: 150px;
-  overflow-x: scroll;
-  margin: auto;
-}
-.deckList > li {
-  min-width: 100px;
-  height: 80px;
-  margin: 20px;
-  background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png");
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: 50px;
-}
+
 .userNames {
   display: flex;
   flex-direction: row;
@@ -165,9 +222,10 @@ ul {
   margin-top: 100px;
 }
 .pokemonBattle {
+  width: 65%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   animation: 1s shake;
 }
