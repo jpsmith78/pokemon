@@ -3,6 +3,7 @@
   <head>
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js" charset="utf-8"></script>
      <script src="app.js" type="text/javascript"></script>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
      <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
 
@@ -13,8 +14,8 @@
   <body ng-controller="MainController as ctrl">
 
     <header>
-      <h1>Pokemon Fighting Game!</h1>
 
+      <h1>Pokemon Fighting Game!</h1>
       <h2 ng-if="ctrl.loggedInUser">Welcome {{ctrl.loggedInUser.username}}</h2>
 
       <nav>
@@ -126,7 +127,7 @@
       =========================== -->
       <div class="modal-background" ng-if="ctrl.fullPokeballsModal">
         <div class="modal" >
-          <h3>Your pokeballs are full. Buy some pokemon to make room</h3>
+          <h3>Your pokeballs are full. catch some pokemon to make room</h3>
             <button ng-click="ctrl.fullPokeballsModalFunction()">OK</button>
         </div>
       </div>
@@ -155,83 +156,93 @@
       <<<<<<SUBMIT LIST ITEM>>>>>
       =========================== -->
 
-        <form ng-submit="ctrl.findPokemon()">
+        <form class="select_pokemon" ng-submit="ctrl.findPokemon()">
           <input type="text" placeholder="pokemon name" ng-model="ctrl.pokemonResult">
-          <button type="submit">Submit</button><br/>
+          <button type="submit">select pokemon</button><br/>
         </form>
       </div>
 
       <!-- ======================
       <<<<VIEW SELECTED LIST ITEM>>>>>
       =========================== -->
-
-      <form class="card" ng-submit="ctrl.catchPokemon()" ng-if="ctrl.pokemonName !== ''">
-        <h1>{{ctrl.pokemonName}}</h1>
-        <img class="image" src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
-        <div class="info">
-          <div class="stats">
-            <h3>Types:</h3>
-            <ul>
-              <li ng-repeat="pokemon in ctrl.pokemonTypes">{{pokemon.type.name}}</li>
-            </ul>
+      <div class="card_background">
+        <form class="card" ng-submit="ctrl.catchPokemon()" ng-if="ctrl.pokemonName !== ''">
+          <h1>{{ctrl.pokemonName}}</h1>
+          <img class="image" src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
+          <div class="info">
+            <div class="stats">
+              <h3>Types:</h3>
+              <ul>
+                <li ng-repeat="pokemon in ctrl.pokemonTypes">{{pokemon.type.name}}</li>
+              </ul>
+              <h3>Abilities:</h3>
+              <ul>
+                <li ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
+              </ul>
+            </div>
+            <div class="stats">
+              <h3>Stats:</h3>
+              <ul>
+                <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
+              </ul>
+            </div>
           </div>
-          <div class="stats">
-            <h3>Abilities:</h3>
-            <ul>
-              <li ng-repeat="pokemon in ctrl.pokemonAblilites">{{pokemon.ability.name}}</li>
-            </ul>
-          </div>
-          <div class="stats">
-            <h3>Stats:</h3>
-            <ul>
-              <li ng-repeat="pokemon in ctrl.pokemonStats">{{pokemon.stat.name}}: {{pokemon.base_stat}}</li>
-            </ul>
-          </div>
-
-          <!-- ======================
-          <<<<<BUY SELECTED ITEM>>>>>
-          =========================== -->
-          <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls">Catch Pokemon</button>
+            <!-- ======================
+            <<<<<BUY SELECTED ITEM>>>>>
+            =========================== -->
+            <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls" class="catch">Catch Pokemon</button>
         </form>
-
       </div>
+
+
+
 
       <!-- ======================
       <<<<<<CURRENT USER POKEMON>>>>>
       =========================== -->
 
       <div class="myCards">
-        <div class="my_card_header">
-          <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
-          <h2 ng-if="ctrl.loggedInUser">Wins: {{ctrl.loggedInUser.userWins}}</h2>
-          <h2 ng-if="ctrl.loggedInUser">Losses: {{ctrl.loggedInUser.userLosses}}</h2>
+        <div class="my_card_header" ng-if="ctrl.loggedInUser">
+          <h2 >{{ctrl.loggedInUser.username}}'s Pokeballs: {{ctrl.loggedInUser.pokeBalls}}</h2>
+          <h2 >Wins: {{ctrl.loggedInUser.userWins}}</h2>
+          <h2 >Losses: {{ctrl.loggedInUser.userLosses}}</h2>
+          <div class=" header_bottom_row" >
+            <i class="fas fa-arrow-down"></i>
+            <h2 >{{ctrl.loggedInUser.username}}'s Pokemon</h2>
+            <i class="fas fa-arrow-down"></i>
+          </div>
         </div>
-        <h2 ng-if="ctrl.loggedInUser">{{ctrl.loggedInUser.username}}'s Pokemon</h2>
+
         <div class="myCard" ng-repeat="pokemon in ctrl.collections" ng-if="ctrl.loggedInUser._id === pokemon.ownerId">
             <h3>{{pokemon.name}}</h3>
-            <img src="{{pokemon.image}}" alt="{{pokemon.name}}" />
-            <ul>
-              <h3>Types</h3>
-              <li>{{pokemon.types[0].type.name}}</li>
-              <li>{{pokemon.types[1].type.name}}</li>
-
-            </ul>
-            <ul>
-              <h3>Abilities</h3>
-              <li>{{pokemon.abilities[0].ability.name}}</li>
-              <li>{{pokemon.abilities[1].ability.name}}</li>
-              <li>{{pokemon.abilities[2].ability.name}}</li>
-            </ul>
-            <ul>
-              <h3>Stats</h3>
-              <li>{{pokemon.stats[0].stat.name}}: {{pokemon.stats[0].base_stat}}</li>
-              <li>{{pokemon.stats[1].stat.name}}: {{pokemon.stats[1].base_stat}}</li>
-              <li>{{pokemon.stats[2].stat.name}}: {{pokemon.stats[2].base_stat}}</li>
-              <li>{{pokemon.stats[3].stat.name}}: {{pokemon.stats[3].base_stat}}</li>
-              <li>{{pokemon.stats[4].stat.name}}: {{pokemon.stats[4].base_stat}}</li>
-              <li>{{pokemon.stats[5].stat.name}}: {{pokemon.stats[5].base_stat}}</li>
-            </ul>
-            <button ng-click="ctrl.deleteCollection(pokemon)">Delete</button>
+            <img src="{{pokemon.image}}" alt="{{pokemon.name}}" class="image"/>
+            <div class="info">
+              <div class="stats">
+                <ul>
+                  <h3>Types</h3>
+                  <li>{{pokemon.types[0].type.name}}</li>
+                  <li>{{pokemon.types[1].type.name}}</li>
+                </ul>
+                <ul>
+                  <h3>Abilities</h3>
+                  <li>{{pokemon.abilities[0].ability.name}}</li>
+                  <li>{{pokemon.abilities[1].ability.name}}</li>
+                  <li>{{pokemon.abilities[2].ability.name}}</li>
+                </ul>
+              </div>
+              <div class="stats">
+                <ul>
+                  <h3>Stats</h3>
+                  <li>{{pokemon.stats[0].stat.name}}: {{pokemon.stats[0].base_stat}}</li>
+                  <li>{{pokemon.stats[1].stat.name}}: {{pokemon.stats[1].base_stat}}</li>
+                  <li>{{pokemon.stats[2].stat.name}}: {{pokemon.stats[2].base_stat}}</li>
+                  <li>{{pokemon.stats[3].stat.name}}: {{pokemon.stats[3].base_stat}}</li>
+                  <li>{{pokemon.stats[4].stat.name}}: {{pokemon.stats[4].base_stat}}</li>
+                  <li>{{pokemon.stats[5].stat.name}}: {{pokemon.stats[5].base_stat}}</li>
+                </ul>
+              </div>
+            </div>
+            <button ng-click="ctrl.deleteCollection(pokemon)" class="delete">Delete</button>
         </div>
       </div>
 
@@ -239,18 +250,20 @@
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
       <div class="instructions">
-        <h3 ng-if="ctrl.loggedIn">Click on opponent name to do battle</h3>
+        <h3 ng-if="ctrl.loggedIn">Click on opponent name to do battle.</h3>
       </div>
       <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id">
+        <div class="user_names_header">
           <button ng-click="ctrl.selectOpponent($event)">{{user.username}}</button>
           <h3>Wins: {{user.userWins}}</h3>
           <h3>Losses: {{user.userLosses}}</h3>
           <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
           {{user.pokeBalls}}</h3>
+        </div>
           <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
               <h4>{{collection.name}}</h4>
               <img src="{{collection.image}}" alt="{{collection.name}}"/>
-            </div>
+          </div>
       </div>
 
 
