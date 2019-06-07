@@ -141,6 +141,20 @@
             <button ng-click="ctrl.emptyPokeballsModalFunction()">OK</button>
         </div>
       </div>
+
+      <!-- ======================
+      <<<<<<LOGIN FAIL MODAL>>>>>
+      =========================== -->
+      <div class="modal-background" ng-if="ctrl.loginFailModal">
+        <div class="modal" >
+          <h3>login failed. try again</h3>
+            <button ng-click="ctrl.loginFailModalFunction()">OK</button>
+        </div>
+      </div>
+
+      <!-- ======================
+      <<<<<<END MODALs>>>>>
+      =========================== -->
       <!-- ======================
       <<<<<<POKEMON LIST>>>>>
       =========================== -->
@@ -242,7 +256,9 @@
                 </ul>
               </div>
             </div>
-            <button ng-click="ctrl.deleteCollection(pokemon)" class="delete">Delete</button>
+            <div class="my_card_footer">
+              <button ng-click="ctrl.deleteCollection(pokemon)" class="delete">Delete</button>
+            </div>
         </div>
       </div>
 

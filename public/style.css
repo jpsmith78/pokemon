@@ -162,9 +162,9 @@ input {
 .card, .myCard {
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: space-between;
   align-items: center;
-  border: 6px solid var(--red);
+  border: 5px solid var(--red);
   border-radius: 6px;
   box-shadow: 2px 2px 2px black;
   margin: 10px auto;
@@ -203,6 +203,9 @@ input {
   flex-wrap: wrap;
   background: var(--golden_yellow);
 }
+.myCard {
+  background: var(--gold_foil);
+}
 .myCards > h2 {
   width: 100%;
 }
@@ -219,6 +222,13 @@ input {
 }
 .my_card_header > h2 {
   margin: 2% 5%;
+}
+.my_card_footer {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .header_bottom_row {
   display: flex;
@@ -263,7 +273,7 @@ input {
 }
 .userCollections {
   background: var(--ceulean_blue);
-  
+
 }
 
 /* ==================================

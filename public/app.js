@@ -21,7 +21,9 @@ app.controller('MainController', ['$http', function($http){
   this.loggedIn = false;
   this.showCreateForm = false;
   this.showLogInForm = false;
-  this.showModal = false;
+  this.showCatchModal = false;
+  this.showFailModal = false;
+  this.loginFailModal = false;
   this.showWinModal = false;
   this.showLoseModal = false;
   this.initialNumber = 10;
@@ -125,13 +127,15 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       controller.loggedIn = true;
-      controller.username = '';
-      controller.password = '';
+
       controller.checkLogIn();
       controller.getCollections();
       console.log(res.data);
     },function(error){
       console.log(error);
+      controller.loginFailModalFunction();
+      controller.username = '';
+      controller.password = '';
     });
   };
 
@@ -331,6 +335,12 @@ app.controller('MainController', ['$http', function($http){
   this.emptyPokeballsModalFunction = () => {
     this.emptyPokeballsModal = !this.emptyPokeballsModal;
   };
+  // ========================================
+  // <<<<<<<<<<<SHOW LOGIN FAIL FUNCTION>>>>>>>>>
+  // ========================================
+  this.loginFailModalFunction = () => {
+    this.loginFailModal = !this.loginFailModal;
+  }
 
   // ========================================
   // <<<<<<<<<<<CHECK LOGIN FUNCTION>>>>>>>>>
