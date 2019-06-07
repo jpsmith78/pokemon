@@ -2,7 +2,8 @@
   "name": "pokemon",
   "version": "1.0.0",
   "engines": {
-    "node": "11.3.0"
+    "node": "11.3.0",
+    "npm": "6.9.0"
   },
   "description": "",
   "main": "server.js",
