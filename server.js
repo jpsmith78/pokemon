@@ -50,12 +50,11 @@ app.get('/checkLogIn', (req,res) => {
 // ======================================
 // <<<<<<<<<LISTENING >>>>>>>>>>>>>>>>>
 // ======================================
+app.listen(PORT, () => {
+  console.log('listening...');
+})
+
 mongoose.connect(MONGO_URI, {useNewUrlParser: true});
 mongoose.connection.once('open', () => {
   console.log('connected to mongoose');
-})
-
-
-app.listen(PORT, () => {
-  console.log('listening...');
 })
