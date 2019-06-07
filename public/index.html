@@ -61,7 +61,7 @@
       <<<<<<CAPTURE FAILED MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.showFailModal">
-        <div class="modal" >
+        <div class="small modal" >
           <h3>{{ctrl.pokemonName}} Capture Failed.  Try Again</h3>
           <img src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
           <h4>ha ha ha ha ha!</h4>
@@ -73,7 +73,7 @@
       <<<<<<CAPTURE SUCCEEDED MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.showCatchModal">
-        <div class="modal" >
+        <div class="small modal" >
           <h3>{{ctrl.pokemonName}} captured successfully!</h3>
           <img src="{{ctrl.pokemonSprites}}" alt="{{ctrl.pokemonName}}" />
           <h4>Congratulations!</h4>
@@ -126,7 +126,7 @@
       <<<<<<FULL POKEBALLS MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.fullPokeballsModal">
-        <div class="modal" >
+        <div class="small modal" >
           <h3>Your pokeballs are full. catch some pokemon to make room</h3>
             <button ng-click="ctrl.fullPokeballsModalFunction()">OK</button>
         </div>
@@ -136,8 +136,8 @@
       <<<<<<EMPTY POKEBALLS MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.emptyPokeballsModal">
-        <div class="modal" >
-          <h3>You have no pokeballs left.  Please wait.</h3>
+        <div class="small modal" >
+          <h3>You have no pokeballs left.  Please wait until you have more.</h3>
             <button ng-click="ctrl.emptyPokeballsModalFunction()">OK</button>
         </div>
       </div>
@@ -146,7 +146,7 @@
       <<<<<<LOGIN FAIL MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.loginFailModal">
-        <div class="modal" >
+        <div class="small modal" >
           <h3>login failed. try again</h3>
             <button ng-click="ctrl.loginFailModalFunction()">OK</button>
         </div>
@@ -204,7 +204,10 @@
             <!-- ======================
             <<<<<BUY SELECTED ITEM>>>>>
             =========================== -->
+          <div class="card_footer">
             <button type="submit" ng-if="ctrl.loggedInUser.pokeBalls" class="catch">Catch Pokemon</button>
+          </div>
+
         </form>
       </div>
 
@@ -256,7 +259,7 @@
                 </ul>
               </div>
             </div>
-            <div class="my_card_footer">
+            <div class="card_footer">
               <button ng-click="ctrl.deleteCollection(pokemon)" class="delete">Delete</button>
             </div>
         </div>
@@ -276,10 +279,13 @@
           <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
           {{user.pokeBalls}}</h3>
         </div>
-          <div class="userCollections" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
+        <div class="user_collections">
+          <div class="user_cards" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">
               <h4>{{collection.name}}</h4>
               <img src="{{collection.image}}" alt="{{collection.name}}"/>
           </div>
+        </div>
+
       </div>
 
 

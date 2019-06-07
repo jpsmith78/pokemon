@@ -18,17 +18,18 @@ body {
   font-family: 'Aldrich', sans-serif;
   margin: 0;
   padding: 0;
+  background: var(--golden_yellow);
 }
 
 img {
   width: 100px;
-  border: 2px solid black;
+  border: 4px solid var(--red);
   border-radius: 6px;
   background: white;
 }
 button {
-  width: 120px;
-  height: 50px;
+  width: 130px;
+  height: 60px;
   font-size: 16px;
   font-weight: 600;
   margin: 10px;
@@ -37,6 +38,10 @@ button {
   background-color: var(--ceulean_blue);
   font-family: 'Aldrich', sans-serif;
   color: white;
+}
+button:active {
+  box-shadow: 0 0 0 black;
+  transform: translateY(4px);
 }
 ul {
   display: flex;
@@ -66,6 +71,7 @@ header {
 }
 header > h1 {
   padding: 20px;
+  font-size: 44px;
 }
 
 /* ==================================
@@ -190,9 +196,8 @@ input {
 .stats > h3, .stats > ul > h3 {
   border-bottom: 2px solid white;
 }
-.image {
-  border: 4px solid var(--red);
-  box-shadow: 2px 2px 2px black;
+.catch {
+  background: var(--red);
 }
 /* ==================================
 <<<<<<<<<MY CARDS>>>>>>>>>>>>>
@@ -209,6 +214,9 @@ input {
 .myCards > h2 {
   width: 100%;
 }
+.myCard > .image{
+  border: 4px solid var(--ceulean_blue);
+}
 .my_card_header {
   width: 100%;
   display: flex;
@@ -223,7 +231,7 @@ input {
 .my_card_header > h2 {
   margin: 2% 5%;
 }
-.my_card_footer {
+.card_footer {
   height: 100px;
   width: 100%;
   display: flex;
@@ -237,8 +245,8 @@ input {
   align-items: center;
   width: 100%;
 }
-.delete, .catch {
-  background: var(--red);
+.delete {
+  background: var(--ceulean_blue);
 }
 
 /* ==================================
@@ -256,6 +264,9 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background: var(--boston_universtiy_red);
+  color: white;
+  height: 80px;
 }
 .user_names_header > h3, .user_names_header > button{
   margin: 0 5%;
@@ -269,16 +280,39 @@ input {
   height: 40px;
   width: 40px;
   margin-bottom: -10px;
-  background-color: var(--golden_yellow);
+  background-color: var(--boston_universtiy_red);
 }
-.userCollections {
+.user_collections {
+  display: flex;
+  flex-direction: row;
+  background: var(--gold_foil);
+  margin: auto;
+  width: 100%;
+  overflow-x: scroll;
+  margin-bottom: 20px;
+}
+.user_cards {
+  display: flex;
+  flex-direction: column;
   background: var(--ceulean_blue);
-
+  margin: 20px;
+  max-width: 250px;
+  max-height: 250px;
+  align-items: center;
+  border: 5px solid var(--red);
+  border-radius: 5px;
+  padding: 0 40px 15px 40px;
+  color: white;
 }
 
 /* ==================================
 <<<<<<<<MODAL>>>>>>>>>>>>
 ================================== */
+.instructions {
+  background: var(--ceulean_blue);
+  color: white;
+  margin-top: 30px;
+}
 .modal-background {
   height: 1000px;
   top: 0;
@@ -293,12 +327,24 @@ input {
 .modal {
   width: 600px;
   height: 600px;
+  padding: 20px;
   background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 100px;
+  background: var(--golden_yellow);
+  border: 5px solid var(--ceulean_blue);
+  border-radius: 5px;
+  color: var(--ceulean_blue);
+}
+.modal > img {
+  animation: 1s shake;
+}
+.small {
+  width: 450px;
+  height: 450px;
 }
 .pokemonBattle {
   width: 65%;

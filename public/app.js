@@ -127,7 +127,8 @@ app.controller('MainController', ['$http', function($http){
       }
     }).then(function(res){
       controller.loggedIn = true;
-
+      controller.username = '';
+      controller.password = '';
       controller.checkLogIn();
       controller.getCollections();
       console.log(res.data);

@@ -22,6 +22,11 @@ router.post('/', (req,res) => {
           status:201,
           message: 'session created!'
         });
+      }else{
+        res.status(401).json({
+          status: 401,
+          message: 'login failed!'
+        });
       }
     }else{
       res.status(401).json({
