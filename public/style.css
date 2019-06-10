@@ -130,6 +130,13 @@ input {
   align-items: center;
   justify-content: center;
 }
+.deck_header {
+  width: 65%;
+  margin: 0 auto 10px auto;
+}
+.deck_header > h2{
+  margin: 30px auto;
+}
 .select_pokemon {
   display: flex;
   align-items: center;
@@ -157,7 +164,6 @@ input {
   color: var(--ceulean_blue);
   border: 2px solid white;
   border-radius: 5px;
-
 }
 /* ==================================
 <<<<<<<<<<<<CARD>>>>>>>>>>>>>

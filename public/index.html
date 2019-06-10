@@ -92,9 +92,8 @@
             <h3>VS</h3>
             <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
           </div>
-          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
-          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
-          </h3>
+          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points.</h3>
+          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense points.</h3>
           <h3>the winner is {{ctrl.loggedInUser.username}}!</h3>
           <img src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
           <h3>{{ctrl.loggedInUser.username}} has won a pokeball!</h3>
@@ -112,9 +111,8 @@
             <h3>VS</h3>
             <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
           </div>
-          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points</h3>
-          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense
-          </h3>
+          <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points.</h3>
+          <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense points.</h3>
           <h3>The winner is {{ctrl.selectedOpponentName}}!</h3>
           <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
           <h3>{{ctrl.loggedInUser.username}} has lost a pokeball!</h3>
@@ -160,7 +158,14 @@
       =========================== -->
 
       <div class="deck_nav">
-        <h1>Pokemon List</h1>
+        <div class="deck_header">
+
+          <h2>Click on a pokemon from the list or type the name of desired pokemon into the input field, then press the select pokemon button</h2>
+          <h2 ng-if="ctrl.loggedIn">When you have selected your desired pokemon, press the catch button to attemp to capture the pokemon with one of your pokeballs. Be careful! More evolved pokemon are harder to catch!</h2>
+          <h2 ng-if="ctrl.loggedIn">Don't worry if you run out of pokeballs! You recover one every three minutes util you have ten again.</h2>
+          <h1>Pokemon List</h1>
+        </div>
+
         <ol class="deckList">
           <li ng-repeat="pokemon in ctrl.pokemonList" ng-click="ctrl.moveNameToInputField($event)" ng-bind="pokemon">{{pokemon.name}}</li>
         </ol>
@@ -269,7 +274,7 @@
       <<<<<<ALL OTHER USERS INFO>>>>>
       =========================== -->
       <div class="instructions">
-        <h3 ng-if="ctrl.loggedIn">Click on opponent name to do battle.</h3>
+        <h2 ng-if="ctrl.loggedIn">Click on an opponent's name to do battle.</h2>
       </div>
       <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id">
         <div class="user_names_header">

@@ -534,7 +534,9 @@ app.controller('MainController', ['$http', function($http){
 
   let myInt = setInterval(function(){
     for(let i = 0; i < controller.users.length; i++){
-      controller.recoverPokeballs(controller.users[i]);
+      if (controller.users[i].pokeBalls < 10) {
+        controller.recoverPokeballs(controller.users[i]);
+      }
     }
   }, 120000);
 
