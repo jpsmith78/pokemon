@@ -275,7 +275,9 @@ app.controller('MainController', ['$http', function($http){
       url: '/users'
     }).then(function(res){
       controller.users = res.data;
+      controller.checkLogIn();
       console.log(controller.users);
+
     },function(error){
       console.log(error);
     })
@@ -359,6 +361,7 @@ app.controller('MainController', ['$http', function($http){
               res.data.currentUser.userLosses = controller.users[i].userLosses;
             }
           }
+          console.log(controller.users);
           controller.loggedInUser = res.data.currentUser;
         }else{
           controller.loggedInUser = '';

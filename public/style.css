@@ -170,7 +170,7 @@ input {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 5px solid var(--red);
+  border: 2px solid black;
   border-radius: 6px;
   box-shadow: 2px 2px 2px black;
   margin: 10px auto;
@@ -225,7 +225,7 @@ input {
   justify-content: center;
   flex-wrap: wrap;
   background: var(--ceulean_blue);
-  border: 4px solid var(--red);
+  border: 2px solid black;
   color: white;
 }
 .my_card_header > h2 {
@@ -264,7 +264,9 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: var(--boston_universtiy_red);
+  background: var(--gold_foil);
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
   color: white;
   height: 80px;
 }
@@ -280,16 +282,17 @@ input {
   height: 40px;
   width: 40px;
   margin-bottom: -10px;
-  background-color: var(--boston_universtiy_red);
+  background-color: var(--gold_foil);
 }
 .user_collections {
   display: flex;
   flex-direction: row;
-  background: var(--gold_foil);
+  background: var(--boston_universtiy_red);
   margin: auto;
   width: 100%;
   overflow-x: scroll;
   margin-bottom: 20px;
+  border-bottom: 2px solid black;
 }
 .user_cards {
   display: flex;
@@ -299,7 +302,7 @@ input {
   max-width: 250px;
   max-height: 250px;
   align-items: center;
-  border: 5px solid var(--red);
+  border: 2px solid black;
   border-radius: 5px;
   padding: 0 40px 15px 40px;
   color: white;
