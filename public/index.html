@@ -8,6 +8,11 @@
      <link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
 
      <link rel="stylesheet" href="style.css">
+
+     <meta property='og:title' content='Pokemon Fighting Game'/>
+		<meta property='og:image' content='https://i.imgur.com/0ABIs8D.png?1'/>
+		<meta property='A MEAN stack application that utilizes a #rd party API.  Users can log in and catch pokemon.  Then they can do battle with other users where their sstats will be compared.'/>
+	  <meta property='og:url' content='https://pokemon-fight-game.herokuapp.com/' />
     <meta charset="utf-8">
     <title></title>
   </head>
@@ -160,7 +165,7 @@
       <div class="deck_nav">
         <div class="deck_header">
 
-          <h2>Click on a pokemon from the list or type the name of desired pokemon into the input field, then press the select pokemon button</h2>
+          <h2>Click on a pokemon from the list or type the name of desired pokemon into the input field, then press the select pokemon button.</h2>
           <h2 ng-if="ctrl.loggedIn">When you have selected your desired pokemon, press the catch button to attemp to capture the pokemon with one of your pokeballs. Be careful! More evolved pokemon are harder to catch!</h2>
           <h2 ng-if="ctrl.loggedIn">Don't worry if you run out of pokeballs! You recover one every three minutes util you have ten again.</h2>
           <h1>Pokemon List</h1>
