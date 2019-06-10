@@ -168,17 +168,17 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<<SPEND POKEBALL FUNCTION>>>>>>>>>
   // ========================================
   this.spendPokeballs = (user) => {
+    let downPokeBalls = user.pokeBalls
     $http({
       method: 'PUT',
       url: '/users/'+ user._id,
       data: {
-        pokeBalls: user.pokeBalls
+        pokeBalls: downPokeBalls - 1
       }
     }).then(function(res){
       if(user.pokeBalls > 0){
-        user.pokeBalls--;
-        res.data.pokeBalls--;
-
+        user.pokeBalls = res.data.pokeBalls;
+        console.log(user.pokeBalls);
         for (let i = 0; i < controller.users.length; i++) {
           if(controller.users[i]._id === user._id){
             controller.users[i].pokeBalls = res.data.pokeBalls;
@@ -195,18 +195,17 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<<RECOVER POKEBALL FUNCTION>>>>>>>>>
   // ========================================
   this.recoverPokeballs = (user) => {
+    let upPokeBalls = user.pokeBalls;
     $http({
       method: 'PUT',
       url: '/users/'+ user._id,
       data: {
-        pokeBalls: user.pokeBalls
+        pokeBalls: upPokeBalls + 1
       }
     }).then(function(res){
       if(user.pokeBalls < 10){
-
-          user.pokeBalls++;
-          res.data.pokeBalls++;
-
+          user.pokeBalls = res.data.pokeBalls;
+          console.log(user.pokeBalls);
           for (let i = 0; i < controller.users.length; i++) {
             if(controller.users[i]._id === user._id){
               controller.users[i].pokeBalls = res.data.pokeBalls;
@@ -221,16 +220,16 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<<INCREMENT WINS FUNCTION>>>>>>>>>
   // ========================================
   this.incrementWins = (user) => {
+    let upWins = user.userWins;
     $http({
       method: 'PUT',
       url: '/users/'+user._id,
       data: {
-        userWins: user.userWins
+        userWins: upWins + 1
       }
     }).then(function(res){
-      user.userWins++;
-      res.data.userWins++;
-
+      user.userWins = res.data.userWins;
+      console.log(res.data.userWins);
       for (let i = 0; i < controller.users.length; i++) {
         if(controller.users[i]._id === user._id){
           controller.users[i].userWins = res.data.userWins;
@@ -246,16 +245,16 @@ app.controller('MainController', ['$http', function($http){
   // <<<<<<<INCREMENT LOSSES FUNCTION>>>>>>>>>
   // ========================================
   this.incrementLosses = (user) => {
+    let upLosses = user.userLosses;
     $http({
       method: 'PUT',
       url: '/users/'+user._id,
       data: {
-        userLosses: user.userLosses
+        userLosses: upLosses + 1
       }
     }).then(function(res){
-      user.userLosses++;
-      res.data.userLosses++;
-
+      user.userLosses = res.data.userLosses;
+      console.log(res.data.userLosses);
       for (let i = 0; i < controller.users.length; i++) {
         if(controller.users[i]._id === user._id){
           controller.users[i].userLosses = res.data.userLosses;
@@ -277,7 +276,6 @@ app.controller('MainController', ['$http', function($http){
       controller.users = res.data;
       controller.checkLogIn();
       console.log(controller.users);
-
     },function(error){
       console.log(error);
     })
