@@ -54,7 +54,7 @@ app.listen(PORT, () => {
   console.log('listening...');
 })
 
-mongoose.connect(MONGO_URI, {useNewUrlParser: true});
+mongoose.connect(MONGODB_URI, {useNewUrlParser: true});
 mongoose.connection.once('open', () => {
   console.log('connected to mongoose');
 })
