@@ -5,10 +5,8 @@
   --golden_yellow: #FFDE00;
   --gold_foil: #B3A125;
 }
-* {
-  text-align: center;
-  text-transform: capitalize;
-}
+/* * {
+} */
 .fas {
   color: white;
   font-size: 24px;
@@ -19,8 +17,8 @@ body {
   margin: 0;
   padding: 0;
   background: var(--golden_yellow);
+  text-align: center;
 }
-
 img {
   width: 100px;
   border: 4px solid var(--red);
@@ -68,6 +66,7 @@ header {
   color: var(--ceulean_blue);
   background: var(--golden_yellow);
   border-bottom: 2px solid var(--red);
+  text-transform: capitalize;
 }
 header > h1 {
   padding: 20px;
@@ -151,6 +150,7 @@ input {
   margin: auto;
   background: var(--ceulean_blue);
   border: 2px solid var(--ceulean_blue);
+  text-transform: capitalize;
 }
 .deckList > li {
   min-width: 100px;
@@ -183,6 +183,8 @@ input {
   width: 400px;
   background: var(--ceulean_blue);
   color: white;
+  text-transform: capitalize;
+
 }
 .info {
   display: flex;
@@ -233,6 +235,7 @@ input {
   background: var(--ceulean_blue);
   border: 2px solid black;
   color: white;
+  text-transform: capitalize;
 }
 .my_card_header > h2 {
   margin: 2% 5%;
@@ -282,6 +285,7 @@ input {
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
+  text-transform: capitalize;
 }
 .pokeball-image {
   border: none;
@@ -323,7 +327,7 @@ input {
   margin-top: 30px;
 }
 .modal-background {
-  height: 1000px;
+  height: 3000px;
   top: 0;
   width: 100%;
   position: fixed;
@@ -347,6 +351,7 @@ input {
   border: 5px solid var(--ceulean_blue);
   border-radius: 5px;
   color: var(--ceulean_blue);
+  text-transform: capitalize;
 }
 .modal > img {
   animation: 1s shake;
