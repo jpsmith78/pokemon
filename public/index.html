@@ -94,14 +94,14 @@
       <div class="modal-background" ng-if="ctrl.showWinModal">
         <div class="modal" >
           <div class="pokemonBattle">
-            <img src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
+            <img class="modal-image" src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
             <h3>VS</h3>
-            <img src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
+            <img class="modal-image" src="{{ctrl.enemyPokemon.image}}" alt="{{ctrl.enemyPokemon.name}}"/>
           </div>
           <h3>{{ctrl.loggedInUser.username}}'s {{ctrl.userPokemon.name}} has {{ctrl.userPokemon.stats[4].base_stat}} attack points.</h3>
           <h3>{{ctrl.selectedOpponentName}}'s {{ctrl.enemyPokemon.name}} has {{ctrl.enemyPokemon.stats[3].base_stat}} defense points.</h3>
           <h3>the winner is {{ctrl.loggedInUser.username}}!</h3>
-          <img src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
+          <img class="modal-image" src="{{ctrl.userPokemon.image}}" alt="{{ctrl.userPokemon.name}}"/>
           <h3>{{ctrl.loggedInUser.username}} has won a pokeball!</h3>
             <button ng-click="ctrl.showWinModalFunction()">OK</button>
         </div>
@@ -166,7 +166,7 @@
       <div class="deck_nav">
         <div class="deck_header">
 
-          <h2>Click on a pokemon from the list or type the name of desired pokemon into the input field, then press the select pokemon button.</h2>
+          <h2>Click on a pokemon from the list or type the name of your desired pokemon in the input field, then press the select pokemon button.</h2>
           <h2 ng-if="ctrl.loggedIn">When you have selected your desired pokemon, press the catch button to attemp to capture the pokemon with one of your pokeballs. Be careful! More evolved pokemon are harder to catch!</h2>
           <h2 ng-if="ctrl.loggedIn">Don't worry if you run out of pokeballs! You recover one every three minutes util you have ten again.</h2>
           <h1>Pokemon List</h1>
@@ -285,10 +285,10 @@
       <div class="userNames" ng-repeat="user in ctrl.users" ng-if="ctrl.loggedInUser._id !== user._id">
         <div class="user_names_header">
           <button ng-click="ctrl.selectOpponent($event)">{{user.username}}</button>
+          <div class="pokeball-image-container"><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" /><h3>: {{user.pokeBalls}}</h3>
+          </div>
           <h3>Wins: {{user.userWins}}</h3>
           <h3>Losses: {{user.userLosses}}</h3>
-          <h3><img class="pokeball-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="pokeball" />:
-          {{user.pokeBalls}}</h3>
         </div>
         <div class="user_collections">
           <div class="user_cards" ng-repeat="collection in ctrl.collections" ng-if="user._id === collection.ownerId">

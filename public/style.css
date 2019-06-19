@@ -1,9 +1,9 @@
 :root{
-  --red: #FF0000;
-  --boston_universtiy_red: #CC0000;
-  --ceulean_blue: #3B4CCA;
-  --golden_yellow: #FFDE00;
-  --gold_foil: #B3A125;
+  --midnight_blue: #000066;
+  --stone_light_blue: #006666;
+  --bahama_blue: #006699;
+  --school_bus_yellow: #FFDE00;
+  --buddha_gold: #CC9900;
 }
 /* * {
 } */
@@ -16,12 +16,13 @@ body {
   font-family: 'Aldrich', sans-serif;
   margin: 0;
   padding: 0;
-  background: var(--golden_yellow);
+  background: var(--school_bus_yellow);
   text-align: center;
 }
 img {
   width: 100px;
-  border: 4px solid var(--red);
+  border: 2px solid black;
+  box-shadow: 1px 1px 1px black;
   border-radius: 6px;
   background: white;
 }
@@ -31,9 +32,10 @@ button {
   font-size: 16px;
   font-weight: 600;
   margin: 10px;
-  box-shadow: 2px 2px 2px black;
+  box-shadow: 1px 1px 1px black;
+  border: 2px solid black;
   border-radius: 5px;
-  background-color: var(--ceulean_blue);
+  background-color: var(--bahama_blue);
   font-family: 'Aldrich', sans-serif;
   color: white;
 }
@@ -61,11 +63,10 @@ ol:hover, button:hover {
 ================================== */
 
 header {
-  padding: 20px;
+  padding: 40px 20px;
   font-family: 'Press Start 2P', cursive;
-  color: var(--ceulean_blue);
-  background: var(--golden_yellow);
-  border-bottom: 2px solid var(--red);
+  color: var(--midnight_blue);
+  border-bottom: 2px solid black;
   text-transform: capitalize;
 }
 header > h1 {
@@ -79,7 +80,7 @@ header > h1 {
 nav {
   display: flex;
   justify-content: center;
-  background: var(--gold_foil);
+  background: var(--buddha_gold);
   margin-top: 50px;
   padding: 10px;
 }
@@ -103,7 +104,7 @@ input {
   font-size: 14px;
   text-align: center;
   font-family: 'Aldrich', sans-serif;
-  border: 2px solid var(--ceulean_blue);
+  border: 2px solid var(--stone_light_blue);
   border-radius: 5px
 }
 .logout {
@@ -114,16 +115,20 @@ input {
 <<<<<<<<<<<MAIN>>>>>>>>>>>>>>>>
 ================================== */
 .main {
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ==================================
 <<<<<<<<DECK LIST>>>>>>>>>
 ================================== */
 .deck_nav {
-  background: var(--golden_yellow);
-  color: var(--ceulean_blue);
+  width: 100%;
+  color: var(--midnight_blue);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,29 +153,27 @@ input {
   height: 150px;
   overflow-x: scroll;
   margin: auto;
-  background: var(--ceulean_blue);
-  border: 2px solid var(--ceulean_blue);
+  background: var(--stone_light_blue);
+  border: 2px solid black;
+  border-radius: 5px;
   text-transform: capitalize;
 }
 .deckList > li {
   min-width: 100px;
   height: 80px;
   margin: 20px;
-  background-color: var(--golden_yellow);
+  background-color: var(--bahama_blue);
   background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: 50px;
-  color: var(--ceulean_blue);
+  color: white;
   border: 2px solid white;
   border-radius: 5px;
 }
 /* ==================================
 <<<<<<<<<<<<CARD>>>>>>>>>>>>>
 ================================== */
-.card_background {
-  background: var(--golden_yellow);
-}
 .card, .myCard {
   display: flex;
   flex-direction: column;
@@ -181,7 +184,7 @@ input {
   box-shadow: 2px 2px 2px black;
   margin: 10px auto;
   width: 400px;
-  background: var(--ceulean_blue);
+  background: var(--stone_light_blue);
   color: white;
   text-transform: capitalize;
 
@@ -204,8 +207,8 @@ input {
 .stats > h3, .stats > ul > h3 {
   border-bottom: 2px solid white;
 }
-.catch {
-  background: var(--red);
+.catch, .delete {
+  background: red;
 }
 /* ==================================
 <<<<<<<<<MY CARDS>>>>>>>>>>>>>
@@ -214,16 +217,16 @@ input {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background: var(--golden_yellow);
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  background: var(--buddha_gold);
+  margin-bottom: 30px;
 }
 .myCard {
-  background: var(--gold_foil);
+  background: var(--stone_light_blue);
 }
 .myCards > h2 {
   width: 100%;
-}
-.myCard > .image{
-  border: 4px solid var(--ceulean_blue);
 }
 .my_card_header {
   width: 100%;
@@ -232,8 +235,9 @@ input {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  background: var(--ceulean_blue);
-  border: 2px solid black;
+  background: var(--bahama_blue);
+  border-bottom: 2px solid black;
+  margin-bottom: 20px;
   color: white;
   text-transform: capitalize;
 }
@@ -254,18 +258,17 @@ input {
   align-items: center;
   width: 100%;
 }
-.delete {
-  background: var(--ceulean_blue);
-}
+
 
 /* ==================================
 <<<<<<<<<USER LIST>>>>>>>>>>>>
 ================================== */
 .userNames {
+  width: 90%;
+  margin: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background: var(--golden_yellow);
 }
 .user_names_header {
   width: 100%;
@@ -273,13 +276,16 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: var(--gold_foil);
+  background: var(--stone_light_blue);
   border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
   color: white;
   height: 80px;
 }
-.user_names_header > h3, .user_names_header > button{
+.user_names_header > h3, .user_names_header > button {
   margin: 0 5%;
   display: flex;
   flex-direction: row;
@@ -291,23 +297,31 @@ input {
   border: none;
   height: 40px;
   width: 40px;
-  margin-bottom: -10px;
-  background-color: var(--gold_foil);
+  background-color: var(--stone_light_blue);
+  box-shadow: 0 0 0 black;
+}
+.pokeball-image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 5% 5%;
 }
 .user_collections {
   display: flex;
   flex-direction: row;
-  background: var(--boston_universtiy_red);
+  background: var(--buddha_gold);
   margin: auto;
   width: 100%;
   overflow-x: scroll;
   margin-bottom: 20px;
-  border-bottom: 2px solid black;
+  border: 2px solid black;
+  border-radius: 0 0 5px 5px;
 }
 .user_cards {
   display: flex;
   flex-direction: column;
-  background: var(--ceulean_blue);
+  background: var(--bahama_blue);
   margin: 20px;
   max-width: 250px;
   max-height: 250px;
@@ -322,9 +336,8 @@ input {
 <<<<<<<<MODAL>>>>>>>>>>>>
 ================================== */
 .instructions {
-  background: var(--ceulean_blue);
-  color: white;
   margin-top: 30px;
+  color: var(--midnight_blue);
 }
 .modal-background {
   height: 3000px;
@@ -347,10 +360,10 @@ input {
   justify-content: center;
   align-items: center;
   margin-top: 100px;
-  background: var(--golden_yellow);
-  border: 5px solid var(--ceulean_blue);
+  background: var(--school_bus_yellow);
+  border: 5px solid var(--stone_light_blue);
   border-radius: 5px;
-  color: var(--ceulean_blue);
+  color: var(--midnight_blue);
   text-transform: capitalize;
 }
 .modal > img {
@@ -390,4 +403,43 @@ input {
   90% { transform: skewX(-2deg); }
   95% { transform: skewX(2deg); }
   100% { transform: skewX(0deg); }
+}
+@media (max-width: 700px) {
+  .modal {
+    width: 300px;
+    height: 300px;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  .modal-image {
+    height: 40px;
+    width: 40px;
+  }
+}
+@media (max-width: 400px){
+  header > h1 {
+    font-size: 38px;
+  }
+  .nav-form {
+    margin: 2% 5%;
+  }
+  .user_names_header {
+    height: 120px;
+    flex-wrap: wrap;
+    padding: 2%;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .modal {
+    height: 400px;
+    width: 400px;
+    margin-top: 100px;
+  }
+  .small {
+    height: 300px;
+    width: 300px;
+  }
+  .deck_header {
+    font-size: 14px;
+  }
 }
