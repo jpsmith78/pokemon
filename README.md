@@ -18,6 +18,7 @@ This game uses a 3rd party pokemon API to gather and list all contained pokemon 
 -user can select opponet to do batle with.
 -modals for win/loss, catch success/fail and login fail.
 -pokeballs incement every three minutes until they reach 10.
+-app has responsive design.
 
 ## approach taken
 The first step was extracting the correct data from the third party API and displaying it correctly to the page.  After this was achieved. the next step was to make create and get routes for users and collections and import selected pokemon data into current users collection.
