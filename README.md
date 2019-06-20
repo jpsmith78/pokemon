@@ -15,7 +15,8 @@ This game uses a 3rd party pokemon API to gather and list all contained pokemon 
 -show logged in user's stats and pokemon collection.
 -list all other users and collections at bottom of page.
 -give users ability to add and delete pokemon to their collections.
--user can select opponet to do batle with.
+-instructions can be hidden.
+-user can select opponent to do battle with.
 -modals for win/loss, catch success/fail and login fail.
 -pokeballs incement every three minutes until they reach 10.
 -app has responsive design.
