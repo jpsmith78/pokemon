@@ -296,6 +296,13 @@ app.controller('MainController', ['$http', function($http){
   };
 
   // ========================================
+  // <<<<<<<<<<<SHOW INSTRUCTIONS FUNCTION>>>>>
+  // ========================================
+  this.showInstructionsFunction = () => {
+    this.showInstructions = !this.showInstructions;
+  };
+
+  // ========================================
   // <<<<<<<<<<<SHOW FAIL MODAL FUNCTION>>>>>>>>>
   // ========================================
   this.showFailModalFunction = () => {

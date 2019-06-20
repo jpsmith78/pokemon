@@ -127,7 +127,7 @@ input {
 <<<<<<<<DECK LIST>>>>>>>>>
 ================================== */
 .deck_nav {
-  width: 100%;
+  width: 95%;
   color: var(--midnight_blue);
   display: flex;
   flex-direction: column;
@@ -214,19 +214,22 @@ input {
 <<<<<<<<<MY CARDS>>>>>>>>>>>>>
 ================================== */
 .myCards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  border: 2px solid black;
+  border-radius: 6px;
   background: var(--buddha_gold);
   margin-bottom: 30px;
+  width: 95%;
 }
 .myCard {
   background: var(--stone_light_blue);
+  min-width: 350px;
+  margin: 10px 30px;
 }
-.myCards > h2 {
+.my_card_collection {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
 }
 .my_card_header {
   width: 100%;
@@ -264,7 +267,7 @@ input {
 <<<<<<<<<USER LIST>>>>>>>>>>>>
 ================================== */
 .userNames {
-  width: 90%;
+  width: 95%;
   margin: 0;
   display: flex;
   flex-direction: row;
@@ -410,6 +413,9 @@ input {
     height: 300px;
     margin-top: 20px;
     font-size: 12px;
+  }
+  .modal > h3 {
+    margin: 10px;
   }
   .modal-image {
     height: 40px;
