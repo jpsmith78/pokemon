@@ -76,7 +76,7 @@
       </div>
 
       <!-- ======================
-      <<<<<<CAPTURE SUCCEEDED MODAL>>>>>
+      <<<<<<CAPTURE SUCCESS MODAL>>>>>
       =========================== -->
       <div class="modal-background" ng-if="ctrl.showCatchModal">
         <div class="small modal" >
@@ -153,6 +153,23 @@
         <div class="small modal" >
           <h3>login failed. try again</h3>
             <button ng-click="ctrl.loginFailModalFunction()">OK</button>
+        </div>
+      </div>
+
+      <!-- ======================
+      <<<<<<USERNAME TAKEN MODAL>>>>>
+      =========================== -->
+      <div class="modal-background" ng-if="ctrl.usernameFailModal">
+        <div class="small modal" >
+          <h3>username already taken. try again</h3>
+            <button ng-click="ctrl.usernameFailModalFunction()">OK</button>
+        </div>
+      </div>
+
+      <div class="modal-background" ng-if="ctrl.passwordFailModal">
+        <div class="small modal" >
+          <h3>username and password must both be filled. try again</h3>
+            <button ng-click="ctrl.passwordFailModalFunction()">OK</button>
         </div>
       </div>
 

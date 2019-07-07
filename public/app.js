@@ -109,6 +109,11 @@ app.controller('MainController', ['$http', function($http){
       controller.getUsers();
     },function(error){
       console.log(error);
+      if(error.status === 400){
+        controller.passwordFailModalFunction();
+      }else if(error.status === 401){
+        controller.usernameFailModalFunction();
+      };
     });
   };
 
@@ -331,14 +336,14 @@ app.controller('MainController', ['$http', function($http){
   };
 
   // ========================================
-  // <<<<<<<<<<<SHOW LOSE MODAL FUNCTION>>>>>>>>>
+  // <<<<<<<FULL POKEBALL MODAL FUNCTION>>>>>
   // ========================================
   this.fullPokeballsModalFunction = () => {
     this.fullPokeballsModal = !this.fullPokeballsModal;
   };
 
   // ========================================
-  // <<<<<<<<<<<SHOW LOSE MODAL FUNCTION>>>>>>>>>
+  // <<<<<EMPTY POKEBALL MODAL FUNCTION>>>>>>
   // ========================================
   this.emptyPokeballsModalFunction = () => {
     this.emptyPokeballsModal = !this.emptyPokeballsModal;
@@ -349,7 +354,18 @@ app.controller('MainController', ['$http', function($http){
   this.loginFailModalFunction = () => {
     this.loginFailModal = !this.loginFailModal;
   }
-
+  // ========================================
+  // <<<<<REGISTRATION USERNAME TAKEN FUNCTION>>>>
+  // ========================================
+  this.usernameFailModalFunction = () => {
+    this.usernameFailModal = !this.usernameFailModal;
+  }
+  // ========================================
+  // <<<<REGISTRATION EMPTY PASSWORD FUNCTION>>>>
+  // ========================================
+  this.passwordFailModalFunction = () => {
+    this.passwordFailModal = !this.passwordFailModal;
+  }
   // ========================================
   // <<<<<<<<<<<CHECK LOGIN FUNCTION>>>>>>>>>
   // ========================================
