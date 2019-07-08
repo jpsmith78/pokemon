@@ -26,6 +26,8 @@ app.controller('MainController', ['$http', function($http){
   this.loginFailModal = false;
   this.showWinModal = false;
   this.showLoseModal = false;
+  this.usernameFailModal = false;
+  this.passwordFailModal = false;
   this.initialNumber = 10;
 
   this.selectedOpponentName = '';
@@ -114,6 +116,7 @@ app.controller('MainController', ['$http', function($http){
       }else if(error.status === 401){
         controller.usernameFailModalFunction();
       };
+
     });
   };
 

@@ -357,7 +357,6 @@ input {
   width: 600px;
   height: 600px;
   padding: 20px;
-  background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
